@@ -87,7 +87,11 @@ Route::middleware('set_locale')->group(function(){
     Route::post('/auctions', [AuctionController::class, 'store'])->name('auctions.store');
     Route::post('/orderform', [AuctionController::class, 'orderFormBuy'])->name('orderform');
     Route::get('/deposit', [AuctionController::class, 'deposit'])->name('deposit');
-    Route::get('/deposit-success', [AuctionController::class, 'deposit_success'])->name('deposit-success');
+    //Route::get('/deposit-success', [AuctionController::class, 'deposit_success'])->name('deposit-success');
+    Route::get('/paybox', [AuctionController::class, 'paybox'])->name('paybox');
+    Route::get('/failure', [PageController::class, 'failure_page'])->name('failure_page');
+    Route::get('/check', [PageController::class, 'check_page'])->name('check_page');
+    Route::get('/state', [PageController::class, 'state_page'])->name('state_page');
 
 
     Route::get('/wishlist', [WishlistController::class, 'wishlist'])->name('wishlist');

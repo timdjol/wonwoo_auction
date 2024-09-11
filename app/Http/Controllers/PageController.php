@@ -43,10 +43,24 @@ class PageController extends Controller
         return view('pages.oferta', compact('page'));
     }
 
-
     public function fetchState(Request $request)
     {
         $data['states'] = Region::where("country_id", $request->country_id)->get(["title", "id"]);
         return response()->json($data);
+    }
+
+    public function failure_page()
+    {
+        return view('pages.failure');
+    }
+
+    public function check_page()
+    {
+        return view('pages.check');
+    }
+
+    public function state_page()
+    {
+        return view('pages.state');
     }
 }

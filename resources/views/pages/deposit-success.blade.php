@@ -27,7 +27,7 @@
             <div class="row">
                 <div class="col-lg-8 offset-lg-2 col-md-12">
                     {{ $_GET['sum']}}
-                    <img src="https://beymaral-honey.com/wp-content/uploads/2024/06/visa.png" alt="" width="300">
+
                 </div>
             </div>
         </div>

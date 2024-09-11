@@ -27,7 +27,7 @@
             <div class="row">
                 <div class="col-lg-8 offset-lg-2 col-md-12">
                     <h2>Внесите оплату</h2>
-                    <form class="form-callback" id="callback" action="{{ route('deposit-success') }}" method="get">
+                    <form class="form-callback" id="callback" action="{{ route('paybox') }}" method="get">
                         @csrf
                         <input type="hidden" name="user_id" value="{{ Auth::id() }}">
                         <input type="hidden" name="name" value="{{ Auth()->user()->name }}">
