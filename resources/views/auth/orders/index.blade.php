@@ -68,7 +68,7 @@
                                         <form action="{{ route('orders.destroy', $order) }}" method="post">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn delete">Удалить</button>
+                                            <button class="btn delete" onclick="return confirm('Вы уверены, что хотите удалить?')">Удалить</button>
                                         </form>
                                         @endadmin
                                     </ul>

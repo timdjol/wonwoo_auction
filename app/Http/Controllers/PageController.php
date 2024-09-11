@@ -63,4 +63,9 @@ class PageController extends Controller
     {
         return view('pages.state');
     }
+
+    public function success_page()
+    {
+        return view('pages.success');
+    }
 }

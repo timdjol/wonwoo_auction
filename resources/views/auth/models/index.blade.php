@@ -45,7 +45,7 @@
                                             }}">Редактировать</a></li>
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn delete">Удалить</button>
+                                            <button class="btn delete" onclick="return confirm('Вы уверены, что хотите удалить?')">Удалить</button>
                                         </ul>
                                     </form>
                                 </td>

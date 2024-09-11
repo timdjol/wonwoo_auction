@@ -4,7 +4,8 @@
 
 @section('content')
 
-    <div class="pagetitle">
+    <div class="pagetitle" style="background-image: url({{ route('index') }}/img/slide1.jpg)">
+        <div class="overlay"></div>
         <div class="container">
             <div class="row">
                 <div class="col-md-12">

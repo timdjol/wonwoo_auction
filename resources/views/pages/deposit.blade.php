@@ -4,8 +4,6 @@
 
 @section('content')
 
-
-
     <div class="pagetitle" style="background-image: url({{ route('index') }}/img/slide1.jpg)">
         <div class="overlay"></div>
         <div class="container">
@@ -21,6 +19,7 @@
             </div>
         </div>
     </div>
+
 
     <div class="page about">
         <div class="container">
@@ -48,7 +47,7 @@
 @endsection
 
 <script>
-    window.setTimeout(function(){
+    window.setTimeout(function () {
         window.location.href = "{{ route('index') }}";
     }, 31000);
 </script>
