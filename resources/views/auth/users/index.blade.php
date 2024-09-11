@@ -42,7 +42,13 @@
                                 <td><a href="mailto:{{ $user->email }}">{{ $user->email }}</a></td>
                                 <td>
                                     @if($user->status === 1)
-                                        <div class="alert alert-success">Внес депозит</div>
+                                        <div class="alert alert-success">
+                                            @isset($user->payments->first()->sum)
+                                                Внес депозит {{ number_format($user->payments->first()->sum) }} сом
+                                            @else
+                                                Внес депозит
+                                           @endisset
+                                        </div>
                                     @else
                                         <div class="alert alert-danger">Отключен</div>
                                     @endif
