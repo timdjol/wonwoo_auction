@@ -140,7 +140,7 @@
         @endif
     </div>
     @php
-     $admin = \Illuminate\Support\Facades\Auth::id();
+        $admin = \Illuminate\Support\Facades\Auth::id();
     @endphp
     @if($admin === 1)
         <div class="form-group">
@@ -170,3 +170,19 @@
         <p>Сохранено</p>
     @endif
 </form>
+
+<div class="deposit">
+    <h4>Депозит</h4>
+    @php
+        $payment = \App\Models\Payment::where('user_id', $user->id)->first();
+    @endphp
+    @isset($payment)
+        <div class="alert alert-success">
+            Ваш депозит составляет: {{ number_format($payment->sum) }} сом
+        </div>
+    @endisset
+    <div class="btn-wrap">
+        <a href="{{ route('deposit') }}" target="_blank" class="more">Пополнить</a>
+    </div>
+
+</div>
