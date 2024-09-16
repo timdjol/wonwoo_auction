@@ -4,6 +4,22 @@
 
 @section('content')
 
+
+    @php
+        $contacts = \App\Models\Contact::first();
+        $date_auc = Carbon\Carbon::parse($contacts->date_auc);
+        $now = Carbon\Carbon::parse(Carbon\Carbon::now());
+    @endphp
+
+    @if($date_auc < $now->addMinute(2))
+        @php
+            $contacts->update([
+                'date_auc' => $date_auc->addDays(7)->format('Y-m-d H:i')
+            ]);
+        @endphp
+    @endif
+
+
     <div class="slider">
         <div class="owl-carousel owl-slider">
             @foreach($sliders as $slider)

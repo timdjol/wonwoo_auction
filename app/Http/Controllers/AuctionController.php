@@ -22,7 +22,7 @@ class AuctionController extends Controller
     }
 
     public function store(Request $request)
-    {
+    {;
         $params = $request->all();
         Order::create($params);
         Mail::to('info@wonwookorea.com')->send(new AuctionMail($request));
@@ -44,10 +44,6 @@ class AuctionController extends Controller
         return view('pages.deposit');
     }
 
-    public function deposit_success(Request $request)
-    {
-        return view('pages.deposit-success');
-    }
 
     public function paybox(Request $request)
     {

@@ -29,11 +29,11 @@
                     <script>
                         DG.then(function () {
                             var map = DG.map('map', {
-                                center: [43.249376, 76.903054],
-                                zoom: 9
+                                center: [42.829681, 74.555191],
+                                zoom: 15
                             });
 
-                            DG.marker([43.249376, 76.903054], { scrollWheelZoom: false })
+                            DG.marker([42.829681, 74.555191], { scrollWheelZoom: false })
                                 .addTo(map)
                                 .bindLabel('Auction WonWoo', {
                                     static: true
@@ -42,23 +42,24 @@
                     </script>
                 </div>
                 <div class="col-lg-4 col-md-4">
-                    <form action="">
+                    <form action="{{ route('contactform') }}" method="post">
                         <h3>Оставить заявку</h3>
                         <div class="row">
                             <div class="form-group">
-                                <input type="text" placeholder="Ваше имя" required>
+                                <input type="text" name="name" placeholder="Ваше имя" required>
                             </div>
                             <div class="form-group">
-                                <input type="email" placeholder="Email" required>
+                                <input type="email" name="email" placeholder="Email" required>
                             </div>
                             <div class="form-group">
-                                <input type="text" id="phone" placeholder="Номер телефона" required>
+                                <input type="text" id="phone" name="phone" placeholder="Номер телефона" required>
                                 <div id="output"></div>
                             </div>
                             <div class="form-group">
                                 <textarea name="message" rows="4" placeholder="Ваше сообщение"></textarea>
 
                             </div>
+                            @csrf
                             <button class="more" id="send">Отправить</button>
                         </div>
                     </form>

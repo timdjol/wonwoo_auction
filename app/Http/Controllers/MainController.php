@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ContactMail;
+use App\Mail\ShopMail;
 use App\Models\Body;
 use App\Models\Brake;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Engine;
+use App\Models\Form;
 use App\Models\Image;
 use App\Models\Models;
 use App\Models\Order;
@@ -16,6 +19,7 @@ use App\Models\Slider;
 use App\Models\Suspension;
 use App\Models\Transmission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class MainController extends Controller
 {
@@ -130,20 +134,13 @@ class MainController extends Controller
         return view('pages.form');
     }
 
-
-    public function storeform(Request $request) {
-        $contact = new Order;
-
-        $contact->name = $request->name;
-        $contact->email = $request->email;
-        $contact->phone = $request->phone;
-        $contact->user_id = $request->user_id;
-        $contact->sum = $request->sum;
-        $contact->status = $request->status;
-
-        $contact->save();
-
-        return response()->json(['success'=>'Form is successfully submitted!']);
-
+    public function contactform(Request $request)
+    {
+        $params = $request->all();
+        Form::create($params);
+        Mail::to('info@wonwookorea.com')->send(new ContactMail($request));
+        session()->flash('success', 'Ваша заявка отправлена!');
+        return back();
     }
+
 }

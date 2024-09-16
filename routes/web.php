@@ -79,8 +79,7 @@ Route::middleware('set_locale')->group(function(){
     Route::post('/api/fetch-states', [PageController::class, 'fetchState']);
 
     Route::get('/contactpage', [MainController::class, 'contactpage'])->name('contactpage');
-    Route::get('contact-form', 'MainController@createform');
-    Route::post('/contact-form/{product}', 'MainController@storeform');
+    Route::post('/contact-form',  [MainController::class, 'contactform'])->name('contactform');
 
     Route::get('/auctions/index/{id}', [AuctionController::class, 'index'])->name('auctions.index');
     Route::post('/auctions', [AuctionController::class, 'store'])->name('auctions.store');

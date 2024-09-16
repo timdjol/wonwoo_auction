@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $fillable = ['user_id', 'sum', 'name', 'phone', 'email', 'product_id'];
+    protected $fillable = ['user_id', 'sum', 'name', 'phone', 'email', 'product_id', 'product_title'];
 
     public function scopeActive($query)
     {
