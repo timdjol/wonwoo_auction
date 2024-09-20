@@ -25,7 +25,7 @@ class AuctionController extends Controller
     {;
         $params = $request->all();
         Order::create($params);
-        Mail::to('info@wonwookorea.com')->send(new AuctionMail($request));
+        //Mail::to('info@wonwookorea.com')->send(new AuctionMail($request));
         session()->flash('success', 'Ваша ставка выставлена на сумму ' . $request->sum . 'сом');
         return back();
     }

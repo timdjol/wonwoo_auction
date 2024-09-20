@@ -20,6 +20,12 @@
         </div>
     </div>
 
+    @if(\Illuminate\Support\Facades\Auth::check())
+        <script>
+            setTimeout(function(){
+                window.location.reload(1);
+            }, 5000);
+        </script>
     @php
         $contacts = \App\Models\Contact::first();
         $date_auc = Carbon\Carbon::parse($contacts->date_auc);
@@ -46,11 +52,11 @@
             }, 3000);
         </script>
     @else
-        <div class="page about">
+        <div class="page auction">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8 offset-lg-2 col-md-12">
-                        <div class="auction-info-item-value clearfix">
+                        <div class="auction-info-item-value clearfix" style="margin-bottom: 20px">
                             <h4>Аукцион закончится через:</h4>
                             <div class="timer" id="timer">
                             <span id="timeDiff">
@@ -120,10 +126,10 @@
                         <form class="form-callback" id="callback" action="{{ route('auctions.store') }}"
                               method="post">
                             <h3>Участие в аукционе</h3>
+                            <div class="click">Одна заявка = +{{ $contacts->sum_auc }} сом</div>
                             @csrf
                             @php
-                                $csum = \App\Models\Order::where('product_id', $product->firstOrFail()->id)->where
-                                ('user_id', Auth::id())->orderBy('sum', 'desc')->first();
+                                $csum = \App\Models\Order::where('product_id', $product->firstOrFail()->id)->orderBy('sum', 'desc')->first();
                             @endphp
                             <input type="hidden" name="user_id" value="{{ Auth::id() }}">
                             <input type="hidden" name="name" value="{{ Auth()->user()->name }}">
@@ -131,28 +137,52 @@
                             <input type="hidden" name="phone" value="{{ Auth()->user()->phone }}">
                             <input type="hidden" name="product_id" value="{{ $product->firstOrFail()->id }}">
                             <input type="hidden" name="product_title" value="{{ $product->firstOrFail()->title }}">
-                            <input type="hidden" name="sum" id="sum" value="{{ $csum->sum ?? $product->firstOrFail()->price }}">
-                            <img loading="lazy" src="{{ Storage::url($product->firstOrFail()->image) }}" alt="">
+                            <input type="hidden" name="sum" id="sum" value="{{ $csum->sum + $contacts->sum_auc ?? $product->firstOrFail()
+                            ->price + $contacts->sum_auc }}">
+                            <img src="{{ Storage::url($product->firstOrFail()->image) }}" alt="">
                             <h5>Ваша ставка: <a><span
-                                            id="clicks">{{ number_format($csum->sum) ?? number_format( $product->firstOrFail()->price) }}</span>
+                                            id="clicks">{{ number_format($csum->sum + $contacts->sum_auc) ?? number_format(
+                                            $product->firstOrFail()->price + $contacts->sum_auc) }}</span>
                                     сом</h5>
-                            <script>
-                                let clicks = {{ $csum->sum ?? $product->firstOrFail()->price }};
-
-                                function onClick() {
-                                    clicks += {{ $contacts->sum_auc }};
-                                    document.getElementById("clicks").innerHTML = clicks;
-                                    $('#sum').val(clicks);
-                                }
-                            </script>
-                            <a class="more" onClick="onClick()">Добавить +</a>
-                            <button>Отправить заявку</button>
+{{--                            <script>--}}
+{{--                                let clicks = {{ $csum->sum ?? $product->firstOrFail()->price }};--}}
+{{--                                function onClick() {--}}
+{{--                                    clicks += {{ $contacts->sum_auc }};--}}
+{{--                                    document.getElementById("clicks").innerHTML = clicks;--}}
+{{--                                    $('#sum').val(clicks);--}}
+{{--                                }--}}
+{{--                            </script>--}}
+{{--                            <a class="more" onClick="onClick()">Добавить +</a>--}}
+                            <button class="more">Отправить заявку</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     @endif
+    @else
+
+
+        <div class="page">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-danger">Необходимо пройти <a href="{{ route('login')
+                        }}">авторизацию</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
+
 @endsection
 
+
+
+<style>
+    body, html{
+        transition: all .7s ease;
+    }
+</style>
 

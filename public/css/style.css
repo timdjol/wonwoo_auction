@@ -336,7 +336,19 @@ footer ul.soc li{
 footer ul.soc li img{
     width: 30px;
 }
-
+.auction form{
+    background-color: #f5f5f5;
+    padding: 20px 20px 10px;
+    border-radius: 10px;
+}
+.auction form h5{
+    text-align: center;
+    margin-top: 10px;
+}
+.auction form .click{
+    text-align: center;
+    margin: 10px 0;
+}
 @media(max-width: 991px){
     .youtube iframe{
         display: block;
