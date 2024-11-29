@@ -3,8 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <title>@yield('title') - Wonwoo</title>
+    <link rel="icon" href="{{ url('/') }}/img/favicon.jpg">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url('/') }}/img/favicon.jpg">
     <link rel="stylesheet" href="/css/main.min.css">
     <link rel="stylesheet" href="{{route('index')}}/css/admin.css">
     <link rel="stylesheet" href="/css/style.css">

@@ -9,7 +9,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Авто в наличии</h1>
+                    <h1 data-aos="fade-up" data-aos-duration="2000">Авто в наличии</h1>
                     <ul class="breadcrumbs">
                         <li><a href="{{ route('index') }}">Главная</a></li>
                         <li>/</li>
@@ -32,7 +32,7 @@
                 <div class="col-md-9">
                     <div class="row">
                         @foreach($products as $product)
-                            <div class="col-lg-4 col-md-6">
+                            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-duration="2000">
                                 @include('layouts.card')
                             </div>
                         @endforeach

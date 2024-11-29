@@ -57,8 +57,9 @@
                             </div>
                             <div class="form-group">
                                 <textarea name="message" rows="4" placeholder="Ваше сообщение"></textarea>
-
                             </div>
+                            <div class="g-recaptcha mt-4" data-sitekey={{config('services.recaptcha.key')}}></div>
+                            <script async src="https://www.google.com/recaptcha/api.js"></script>
                             @csrf
                             <button class="more" id="send">Отправить</button>
                         </div>

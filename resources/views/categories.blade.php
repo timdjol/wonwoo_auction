@@ -8,7 +8,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>@lang('main.all_categories')</h1>
+                    <h1 data-aos="fade-up" data-aos-duration="2000">@lang('main.all_categories')</h1>
                     <h4>@lang('main.showed'): {{ $categories->count() }}</h4>
                     <div class="breadcrumbs">
                         <ul>
@@ -26,7 +26,7 @@
         <div class="container">
             <div class="row">
                 @foreach($categories as $category)
-                    <div class="col-lg-4 col-md-4 col-6">
+                    <div class="col-lg-4 col-md-4 col-6" data-aos="fade-up" data-aos-duration="2000">
                         <div class="catalog-item">
                             <a href="{{ route('category', $category->code) }}">
                                 {{$category->__('title')}}

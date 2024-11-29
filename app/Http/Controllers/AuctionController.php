@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Classes\Basket;
 use App\Mail\AuctionMail;
 use App\Mail\ShopMail;
 use App\Models\Form;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 
@@ -25,9 +24,38 @@ class AuctionController extends Controller
     {;
         $params = $request->all();
         Order::create($params);
-        //Mail::to('info@wonwookorea.com')->send(new AuctionMail($request));
+        Mail::to('info@wonwookorea.com')->send(new AuctionMail($request));
+        //Mail::to('info@wonwookorea.com')->cc($request->email)->send(new AuctionMail($request));
         session()->flash('success', 'Ваша ставка выставлена на сумму ' . $request->sum . 'сом');
         return back();
+    }
+
+    public function sales()
+    {
+        $car = Product::where('dateLot', '2024-11-04')->first();
+        $cars = Product::where('dateLot', '2024-11-04')->where('status', 1)->get();
+        $cc = Product::where('dateLot', '2024-11-04')->pluck('id')->toArray();
+        $users = User::where('status', 1)->whereNotNull('last_seen')->get();
+
+        //$related = Product::where('dateLot', '2024-11-04')->where('id', '!=', $car->id)->where('status', 1)->get();
+        return view('pages.sales', compact('car', 'cars', 'cc', 'users'));
+    }
+
+    public function listings()
+    {
+        $cars = Product::where('dateLot', '2024-11-04')->get();
+        return view('pages.listings', compact('cars'));
+    }
+
+    public function end()
+    {
+        return view('pages.end');
+    }
+
+    public function sale_frame()
+    {
+        $cars = Product::where('dateLot', '2024-11-04')->get();
+        return view('pages.sale_frame', compact('cars'));
     }
 
     public function orderFormBuy(Request $request)

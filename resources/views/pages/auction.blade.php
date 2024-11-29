@@ -24,7 +24,7 @@
         <script>
             setTimeout(function(){
                 window.location.reload(1);
-            }, 5000);
+            }, 2000);
         </script>
     @php
         $contacts = \App\Models\Contact::first();
@@ -137,12 +137,22 @@
                             <input type="hidden" name="phone" value="{{ Auth()->user()->phone }}">
                             <input type="hidden" name="product_id" value="{{ $product->firstOrFail()->id }}">
                             <input type="hidden" name="product_title" value="{{ $product->firstOrFail()->title }}">
-                            <input type="hidden" name="sum" id="sum" value="{{ $csum->sum + $contacts->sum_auc ?? $product->firstOrFail()
+                            @if($csum != null)
+                                <input type="hidden" name="sum" id="sum" value="{{ $csum->sum + $contacts->sum_auc ?? $product->firstOrFail()
                             ->price + $contacts->sum_auc }}">
+                            @else
+                                <input type="hidden" name="sum" id="sum" value="0">
+                            @endif
                             <img src="{{ Storage::url($product->firstOrFail()->image) }}" alt="">
                             <h5>Ваша ставка: <a><span
-                                            id="clicks">{{ number_format($csum->sum + $contacts->sum_auc) ?? number_format(
-                                            $product->firstOrFail()->price + $contacts->sum_auc) }}</span>
+                                            id="clicks">
+                                        @if($csum != null)
+                                            {{ number_format($csum->sum + $contacts->sum_auc) ?? number_format(
+                                            $product->firstOrFail()->price + $contacts->sum_auc) }}
+                                        @else
+                                            {{ number_format($product->firstOrFail()->price + $contacts->sum_auc)}}
+                                        @endif
+                                    </span>
                                     сом</h5>
 {{--                            <script>--}}
 {{--                                let clicks = {{ $csum->sum ?? $product->firstOrFail()->price }};--}}

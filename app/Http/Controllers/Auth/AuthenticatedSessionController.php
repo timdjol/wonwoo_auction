@@ -15,8 +15,7 @@ class AuthenticatedSessionController extends Controller
     /**
      * Display the login view.
      */
-    public function create(): View
-    {
+    public function create(Request $request): View {
         return view('auth.login');
     }
 
@@ -26,9 +25,8 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
-
         $request->session()->regenerate();
-
+        Auth::logoutOtherDevices($request->password);
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 

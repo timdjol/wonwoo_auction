@@ -34,11 +34,11 @@
                                     <h3>Купить {{ $product->title }}</h3>
                                     <div class="form-group">
                                         <label for="">Ваше имя</label>
-                                        <input type="text" name="name">
+                                        <input type="text" name="name" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="">Номер телефона</label>
-                                        <input type="number" id="phone" name="phone">
+                                        <input type="number" id="phone" name="phone" required>
                                     </div>
                                     <button class="more" id="send">Отправить</button>
                                 </form>

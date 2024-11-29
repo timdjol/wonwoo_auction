@@ -9,7 +9,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>{{ $page->title }}</h1>
+                    <h1 data-aos="fade-up" data-aos-duration="2000">{{ $page->title }}</h1>
                     <ul class="breadcrumbs">
                         <li><a href="{{ route('index') }}">Главная</a></li>
                         <li>/</li>

@@ -9,7 +9,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>{{$brand->title}}</h1>
+                    <h1 data-aos="fade-up" data-aos-duration="2000">{{$brand->title}}</h1>
                     {{--                    <p>{!! $category->__('description') !!}</p>--}}
                     <ul class="breadcrumbs">
                         <li><a href="{{ route('index') }}">Главная</a></li>

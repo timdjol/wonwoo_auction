@@ -23,7 +23,7 @@ Route::get('/logout', 'App\Http\Controllers\ProfileController@logout')->name('ge
 
 
 Route::middleware('set_locale')->group(function(){
-    Route::middleware('auth')->group(function()
+    Route::middleware('auth', 'auth.session')->group(function()
     {
         Route::group([
             "prefix" => "person",
@@ -65,32 +65,40 @@ Route::middleware('set_locale')->group(function(){
 
     require __DIR__.'/auth.php';
 
-
     Route::get('/', [MainController::class, 'index'])->name('index');
     Route::get('/catalog', [MainController::class, 'catalog'])->name('catalog');
     Route::get('/categories', [MainController::class, 'categories'])->name('categories');
+    Route::get('/search', [MainController::class, 'search'])->name('search');
+
     Route::get('/about', [PageController::class, 'about'])->name('about');
     Route::get('/contactspage', [PageController::class, 'contacts'])->name('contactspage');
     Route::get('/policy', [PageController::class, 'policy'])->name('policy');
     Route::get('/oferta', [PageController::class, 'oferta'])->name('oferta');
-    Route::get('/search', [MainController::class, 'search'])->name('search');
     Route::get('/stock', [PageController::class, 'stock'])->name('stock');
-
     Route::post('/api/fetch-states', [PageController::class, 'fetchState']);
-
-    Route::get('/contactpage', [MainController::class, 'contactpage'])->name('contactpage');
-    Route::post('/contact-form',  [MainController::class, 'contactform'])->name('contactform');
+    Route::get('/contactpage', [PageController::class, 'contactpage'])->name('contactpage');
+    Route::post('/contact-form',  [PageController::class, 'contactform'])->name('contactform');
 
     Route::get('/auctions/index/{id}', [AuctionController::class, 'index'])->name('auctions.index');
     Route::post('/auctions', [AuctionController::class, 'store'])->name('auctions.store');
     Route::post('/orderform', [AuctionController::class, 'orderFormBuy'])->name('orderform');
     Route::get('/deposit', [AuctionController::class, 'deposit'])->name('deposit');
     Route::get('/paybox', [AuctionController::class, 'paybox'])->name('paybox');
+    Route::get('/sales', [AuctionController::class, 'sales'])->name('sales');
+    Route::get('/listings', [AuctionController::class, 'listings'])->name('listings');
+    Route::get('/sales?tab=tab-{page}', [AuctionController::class, 'sale'])->name('sale');
+    Route::get('/end', [AuctionController::class, 'end'])->name('end');
+    Route::get('/sale_frame', [AuctionController::class, 'sale_frame'])->name('sale_frame');
+    Route::get('/socket', 'App\Http\Controllers\PusherController@index')->name('socket');
+    Route::post('/broadcast', 'App\Http\Controllers\PusherController@broadcast')->name('broadcast');
+    Route::post('/receive', 'App\Http\Controllers\PusherController@receive')->name('receive');
+    Route::get('/send', 'App\Http\Controllers\AuctionController@sendMessage')->name('sendMessage');
+
+
     Route::get('/failure', [PageController::class, 'failure_page'])->name('failure_page');
     Route::get('/check', [PageController::class, 'check_page'])->name('check_page');
     Route::get('/state', [PageController::class, 'state_page'])->name('state_page');
     Route::get('/success', [PageController::class, 'success_page'])->name('success_page');
-
 
     Route::get('/wishlist', [WishlistController::class, 'wishlist'])->name('wishlist');
     Route::post('/wishlist/add/{product?}', 'App\Http\Controllers\WishlistController@wishlistAdd')->name('wishlist-add');

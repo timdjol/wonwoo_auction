@@ -1,7 +1,7 @@
 <table>
     <tbody>
         <tr>
-            <td>ФИО покупателя</td>
+            <td>ФИО</td>
             <td>{{ $auction->name }}</td>
         </tr>
         <tr>

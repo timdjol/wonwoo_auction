@@ -9,6 +9,7 @@
             <div class="row">
                 <div class="col-lg-6 offset-lg-3 col-md-12">
                     <h3>Авторизация</h3>
+
                     <form method="POST" action="{{ route('login') }}">
                         @error ('email')
                             <div class="alert alert-danger">{{ $message }}</div>

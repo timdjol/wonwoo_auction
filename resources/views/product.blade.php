@@ -9,7 +9,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Каталог</h1>
+                    <h1 data-aos="fade-up" data-aos-duration="2000">{{ $product->title }}</h1>
                     <ul class="breadcrumbs">
                         <li><a href="{{ route('index') }}">Главная</a></li>
                         <li>/</li>
@@ -651,7 +651,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h2>Другие аукционы</h2>
+                    <h2 data-aos="fade-up" data-aos-duration="2000">Другие аукционы</h2>
                 </div>
             </div>
             <div class="row">

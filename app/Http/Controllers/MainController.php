@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\ContactMail;
-use App\Mail\ShopMail;
 use App\Models\Body;
 use App\Models\Brake;
 use App\Models\Brand;
@@ -12,14 +10,14 @@ use App\Models\Engine;
 use App\Models\Form;
 use App\Models\Image;
 use App\Models\Models;
-use App\Models\Order;
 use App\Models\Product;
 use App\Models\Salon;
 use App\Models\Slider;
 use App\Models\Suspension;
 use App\Models\Transmission;
+use App\Models\Wishlist;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
 
 class MainController extends Controller
 {
@@ -30,8 +28,9 @@ class MainController extends Controller
         $brands = Brand::orderBy('title', 'ASC')->get();
         $models = Models::orderBy('title', 'ASC')->get();
         $categories = Category::orderBy('sort', 'ASC')->get();
+        $wishlists = Wishlist::where('user_id', Auth::id())->get();
 
-        return view('index', compact('products', 'brands', 'models', 'categories', 'sliders'));
+        return view('index', compact('products', 'brands', 'models', 'categories', 'sliders', 'wishlists'));
     }
 
     public function catalog(Request $request)
@@ -118,29 +117,6 @@ class MainController extends Controller
         $salons = Salon::where('product_id', $product->id)->get();
         $bodies = Body::where('product_id', $product->id)->get();
         return view('product', compact('product', 'images', 'related', 'engines', 'transmissions', 'suspensions', 'brakes', 'salons', 'bodies'));
-    }
-
-    public function search()
-    {
-        $title = $_GET['search'];
-        $search = Product::query()
-            ->where('title', 'like', '%' . $title . '%')
-            ->get();
-        return view('search', compact('search'));
-    }
-
-    public function contactpage()
-    {
-        return view('pages.form');
-    }
-
-    public function contactform(Request $request)
-    {
-        $params = $request->all();
-        Form::create($params);
-        Mail::to('info@wonwookorea.com')->send(new ContactMail($request));
-        session()->flash('success', 'Ваша заявка отправлена!');
-        return back();
     }
 
 }

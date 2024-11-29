@@ -9,7 +9,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Cписок аукционов</h1>
+                    <h1 data-aos="fade-up" data-aos-duration="2000">Cписок аукционов</h1>
                     <ul class="breadcrumbs">
                         <li><a href="{{ route('index') }}">Главная</a></li>
                         <li>/</li>
@@ -27,7 +27,7 @@
                     @php
                         $prodc = \App\Models\Product::count();
                     @endphp
-                    <h3>Статус аукциона</h3>
+                    <h3 data-aos="fade-up" data-aos-duration="2000">Статус аукциона</h3>
                     <h5>Ожидаемое количество лотов: {{ $prodc }} единиц</h5>
                     <ul>
                         <li>
@@ -68,7 +68,7 @@
                     <div class="row">
                         @if($products->isNotEmpty())
                             @foreach($products as $product)
-                                <div class="col-lg-4 col-md-6">
+                                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-duration="2000">
                                     @include('layouts.card')
                                 </div>
                             @endforeach
