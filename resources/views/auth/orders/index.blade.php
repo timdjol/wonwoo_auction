@@ -17,7 +17,16 @@
                     @if(session()->has('warning'))
                         <p class="alert alert-warning">{{ session()->get('warning') }}</p>
                     @endif
-                    <h1>Аукционы</h1>
+                    <div class="row aic">
+                        <div class="col-md-6">
+                            <h1>Аукционы</h1>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="btn-wrap">
+                                <a href="{{ route('sendemail') }}" class="btn add">Отправить уведомление</a>
+                            </div>
+                        </div>
+                    </div>
                     <table class="table">
                         <thead>
                         <tr>
@@ -77,7 +86,6 @@
                         @endforeach
                         </tbody>
                     </table>
-
                 </div>
             </div>
         </div>

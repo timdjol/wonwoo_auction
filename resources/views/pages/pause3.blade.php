@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Аукцион завершился!')
+@section('title', 'Ожидание')
 
 @section('content')
     @auth
@@ -9,12 +9,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Аукцион завершился</h1>
+                    <h1>Аукцион в ожидании</h1>
                     <div>
                         <ul class="breadcrumbs">
                             <li><a href="{{ route('index') }}">Главная</a></li>
                             <li>/</li>
-                            <li>Аукцион завершился</li>
+                            <li>Аукцион в ожидании</li>
                         </ul>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                         <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.js"></script>
                         <script>
                             var sound = new Howl({
-                                src: ['music/audio.mp3'],
+                                src: ['music/ding.mp3'],
                                 volume: 0.5,
                                 autoplay: true,
                                 loop: false,
@@ -40,14 +40,29 @@
                             });
                         </script>
 
-                        <div class="alert alert-success">Аукцион завершился!</div>
-                        <div class="btn-wrap">
-                            <a href="{{ route('index') }}" class="more">Перейти на главную страницу</a>
-                        </div>
+                        <div class="alert alert-warning">Аукцион в ожидании!</div>
+                    @if(Request::fullUrl() == route('pause3'))
+                        @php
+                            $contacts = \App\Models\Contact::first();
+                            $now = Carbon\Carbon::parse(Carbon\Carbon::now());
+                            $date_auc = Carbon\Carbon::parse($contacts->date_auc)->addSecond(170);
+                        @endphp
+                        @if($date_auc <= $now)
+                            <script>
+                                window.location.replace("{{ route('sales') }}?tab=tab-4");
+                            </script>
+                        @endif
+                    @endif
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        setTimeout(function () {
+            window.location.reload(1);
+        }, 2000);
+    </script>
 
     <style>
         .page .btn-wrap{

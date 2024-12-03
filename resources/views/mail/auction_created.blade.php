@@ -1,3 +1,4 @@
+<h3>🎉 Поздравляем вы выиграли! 🎊</h3>
 <table>
     <tbody>
         <tr>
@@ -18,3 +19,13 @@
         </tr>
     </tbody>
 </table>
+
+<style>
+    table{
+        width: 100%;
+    }
+    table td{
+        padding: 10px 5px;
+        border-bottom: 1px solid #ddd;
+    }
+</style>

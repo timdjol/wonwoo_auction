@@ -42,6 +42,8 @@ Route::middleware('set_locale')->group(function(){
             {
                 Route::get('/dashboard',
                     [App\Http\Controllers\Admin\OrderController::class, 'dashboard'])->name('dashboard');
+                Route::get('/sendemail',
+                    [App\Http\Controllers\Admin\OrderController::class, 'sendEmail'])->name('sendemail');
                 Route::resource("orders", "App\Http\Controllers\Admin\OrderController");
                 Route::resource("forms", "App\Http\Controllers\Admin\FormController");
                 Route::resource('categories', 'App\Http\Controllers\Admin\CategoryController');
@@ -88,10 +90,17 @@ Route::middleware('set_locale')->group(function(){
     Route::get('/listings', [AuctionController::class, 'listings'])->name('listings');
     Route::get('/sales?tab=tab-{page}', [AuctionController::class, 'sale'])->name('sale');
     Route::get('/end', [AuctionController::class, 'end'])->name('end');
-    Route::get('/sale_frame', [AuctionController::class, 'sale_frame'])->name('sale_frame');
-    Route::get('/socket', 'App\Http\Controllers\PusherController@index')->name('socket');
-    Route::post('/broadcast', 'App\Http\Controllers\PusherController@broadcast')->name('broadcast');
-    Route::post('/receive', 'App\Http\Controllers\PusherController@receive')->name('receive');
+    Route::get('/pause', [AuctionController::class, 'pause'])->name('pause');
+    Route::get('/pause2', [AuctionController::class, 'pause2'])->name('pause2');
+    Route::get('/pause3', [AuctionController::class, 'pause3'])->name('pause3');
+    Route::get('/pause4', [AuctionController::class, 'pause4'])->name('pause4');
+    Route::get('/pause5', [AuctionController::class, 'pause5'])->name('pause5');
+    Route::get('/pause6', [AuctionController::class, 'pause6'])->name('pause6');
+    //Route::get('/sale_frame', [AuctionController::class, 'sale_frame'])->name('sale_frame');
+    //Route::get('/socket', 'App\Http\Controllers\PusherController@index')->name('socket');
+    //Route::post('/broadcast', 'App\Http\Controllers\PusherController@broadcast')->name('broadcast');
+    //Route::post('/receive', 'App\Http\Controllers\PusherController@receive')->name('receive');
+    //Route::get('/send', 'App\Http\Controllers\AuctionController@sendMessage')->name('sendMessage');
     Route::get('/send', 'App\Http\Controllers\AuctionController@sendMessage')->name('sendMessage');
 
 

@@ -7,7 +7,6 @@
     @auth
         @if(\Illuminate\Support\Facades\Auth::user()->status == 1)
             @php
-                $contacts = \App\Models\Contact::first();
                 $now = Carbon\Carbon::parse(Carbon\Carbon::now());
                 $date = Carbon\Carbon::parse($contacts->date_auc);
             @endphp
@@ -19,29 +18,27 @@
                                 <div class="auction-info-item-value clearfix" style="margin-bottom: 20px">
                                     <h4>Аукцион начнется через:</h4>
                                     <div class="timer" id="timer">
-                            <span id="timeDiff">
-                                <span class="timer-item timer-dd">
-                                    <span class="timer-value" id="days">00</span>
-                                    <span class="timer-word">Дн.</span>
-                                </span>
-                                <span class="timer-item timer-hh">
-                                    <span class="timer-value" id="hours">00</span>
-                                    <span class="timer-word">Час.</span>
-                                </span>
-                                <span class="timer-item timer-mm">
-                                    <span class="timer-value" id="minutes">00</span>
-                                    <span class="timer-word">Мин.</span>
-                                </span>
-                                <span class="timer-item timer-ss">
-                                    <span class="timer-value" id="seconds">00</span>
-                                    <span class="timer-word">Сек.</span>
-                                </span>
-                            </span>
+                                        <span id="timeDiff">
+                                            <span class="timer-item timer-dd">
+                                                <span class="timer-value" id="days">00</span>
+                                                <span class="timer-word">Дн.</span>
+                                            </span>
+                                            <span class="timer-item timer-hh">
+                                                <span class="timer-value" id="hours">00</span>
+                                                <span class="timer-word">Час.</span>
+                                            </span>
+                                            <span class="timer-item timer-mm">
+                                                <span class="timer-value" id="minutes">00</span>
+                                                <span class="timer-word">Мин.</span>
+                                            </span>
+                                            <span class="timer-item timer-ss">
+                                                <span class="timer-value" id="seconds">00</span>
+                                                <span class="timer-word">Сек.</span>
+                                            </span>
+                                        </span>
                                     </div>
                                 </div>
-
                                 <script type="text/javascript">
-
                                     const timer = document.querySelector("#timer");
                                     const days = document.querySelector("#days");
                                     const hours = document.querySelector("#hours");
@@ -83,85 +80,33 @@
                     </div>
                 </div>
             @else
-                @if(Request::fullUrl()=="{{ route('sales') }}?tab=tab-1")
+                @if (Request::fullUrl() == route('sales'))
                     @php
-                        $date_auc = Carbon\Carbon::parse($contacts->date_auc)->addSecond(15);
+                        $date_auc = Carbon\Carbon::parse($contacts->date_auc)->addSecond(40);
                     @endphp
-                    @if($date_auc <= $now)
+                    @if ($date_auc <= $now)
                         <script>
-                            setTimeout(function () {
-                                window.location.replace("{{ route('sales') }}?tab=tab-4");
-                            }, 15000);
-                        </script>
-                    @endif
-                @endif
-                @if(Request::fullUrl() == route('sales'))
-                    @php
-                        $date_auc = Carbon\Carbon::parse($contacts->date_auc)->addSecond(15);
-                    @endphp
-                    @if($date_auc <= $now)
-                        <script>
-                            window.location.replace("{{ route('sales') }}?tab=tab-4");
+                            window.location.replace("{{ route('pause') }}");
                         </script>
                     @endif
                 @endif
 
-
-                @if(Request::fullUrl()== route('sales').'?tab=tab-4')
-                    @php
-                        $date_auc = Carbon\Carbon::parse($contacts->date_auc)->addSecond(30);
-                    @endphp
-                    @if($date_auc <= $now)
-                        <script>
-                            window.location.replace("{{ route('sales') }}?tab=tab-5");
-                        </script>
-                    @endif
-                @endif
-                @if(Request::fullUrl()== route('sales').'?tab=tab-5')
-                    @php
-                        $date_auc = Carbon\Carbon::parse($contacts->date_auc)->addSecond(45);
-                    @endphp
-                    @if($date_auc <= $now)
-                        <script>
-                            window.location.replace("{{ route('sales') }}?tab=tab-6");
-                        </script>
-                    @endif
-                @endif
-                @if(Request::fullUrl()== route('sales').'?tab=tab-6')
-                    @php
-                        $date_auc = Carbon\Carbon::parse($contacts->date_auc)->addSecond(60);
-                    @endphp
-                    @if($date_auc <= $now)
-                        <script>
-                            window.location.replace("{{ route('sales') }}?tab=tab-7");
-                        </script>
-                    @endif
-                @endif
-                @if(Request::fullUrl()== route('sales').'?tab=tab-7')
-                    @php
-                        $date_auc = Carbon\Carbon::parse($contacts->date_auc)->addSecond(75);
-                    @endphp
-                    @if($date_auc <= $now)
-                        <script>
-                            window.location.replace("{{ route('sales') }}?tab=tab-8");
-                        </script>
-                    @endif
-                @endif
-                @if(Request::fullUrl()== route('sales').'?tab=tab-8')
-                    @php
-                        $date_auc = Carbon\Carbon::parse($contacts->date_auc)->addSecond(90);
-                    @endphp
-                    @if($date_auc <= $now)
-                        <script>
-                            window.location.replace("{{ route('sales') }}?tab=tab-9");
-                        </script>
-                    @endif
-                @endif
-                @if(Request::fullUrl()== route('sales').'?tab=tab-9')
+                @if (Request::fullUrl() == route('sales') . '?tab=tab-2')
                     @php
                         $date_auc = Carbon\Carbon::parse($contacts->date_auc)->addSecond(100);
                     @endphp
-                    @if($date_auc <= $now)
+                    @if ($date_auc <= $now)
+                        <script>
+                            window.location.replace("{{ route('pause2') }}");
+                        </script>
+                    @endif
+                @endif
+
+                @if (Request::fullUrl() == route('sales') . '?tab=tab-3')
+                    @php
+                        $date_auc = Carbon\Carbon::parse($contacts->date_auc)->addSecond(160);
+                    @endphp
+                    @if ($date_auc <= $now)
                         <script>
                             window.location.replace("{{ route('end') }}");
                         </script>
@@ -170,28 +115,38 @@
 
                 <div class="page sales" id="example-two">
                     <div class="container">
-
-                        <div class="row">
+                        <div class="row" style="margin-bottom: 10px">
+                            <div class="col-md-4"></div>
                             <div class="col-md-4">
-                                <h3>Кол-во авто: {{ $cars->count() }}</h3>
+                                <div class="alert alert-info">Количество участвующих авто: {{ $cars->count() }}</div>
                             </div>
                             <div class="col-md-4">
-                                <h3>Кол-во участников: {{ $users->count() }}</h3>
+                                <div class="alert alert-info">Количество активных участников: {{ $users->count()
+                                }}</div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <ul class="nav whiskey-tabs" class="display: none">
+                                <ul class="nav whiskey-tabs" style="display: none; height: 0;">
                                     @php
                                         $i=0;
+                                        $play = 40;
+                                        $stop = 20;
                                     @endphp
                                     @foreach ($cars as $car)
-
+                                        @php
+                                            $i++;
+                                            $play = $play + 40;
+                                            $stop = $stop + 20;
+                                        @endphp
                                         @if($i==1)
-                                            <li><a href="#tab-{{ $car->id }}" class="current">{{ $car->title }}</a></li>
+                                            <li><a href="#tab-1" class="current">{{ $car->title }}</a></li>
+
                                         @else
-                                            <li><a href="#tab-{{ $car->id }}">{{ $car->title }}</a></li>
+                                            <li><a href="#tab-{{ $i }}">{{ $car->title }}</a></li>
+
                                         @endif
+
                                     @endforeach
                                 </ul>
                                 <div class="list-wrap">
@@ -201,11 +156,10 @@
                                     @foreach($cars as $car)
                                         @php
                                             $j++;
-                                            $contacts = \App\Models\Contact::first();
                                             $csum = \App\Models\Order::where('product_id', $car->id)->orderBy('sum', 'desc')->first();
                                         @endphp
                                         @if($j==1)
-                                            <div id="tab-{{ $car->id }}">
+                                            <div id="tab-{{$j}}">
                                                 <div class="row sales-item">
                                                     <div class="col-md-9">
                                                         <div class="row">
@@ -231,8 +185,8 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="row">
-                                                            <div class="col-md-8">
+                                                        <div class="row" style="margin-top: 30px">
+                                                            <div class="col-md-7">
                                                                 <h3>{{ $car->title }}</h3>
                                                                 <div class="block year">Год
                                                                     выпуска: {{ $car->year }}</div>
@@ -243,7 +197,7 @@
                                                                 <div class="block transmission">
                                                                     Коробка: {{ $car->transmission }}</div>
                                                             </div>
-                                                            <div class="col-md-3">
+                                                            <div class="col-md-5">
                                                                 <img src="{{ Storage::url($car->image) }}" alt="">
                                                             </div>
                                                         </div>
@@ -482,7 +436,7 @@
                                                 </div>
                                             </div>
                                         @else
-                                            <div id="tab-{{ $car->id }}" class="hide">
+                                            <div id="tab-{{$j}}" class="hide">
                                                 <div class="row sales-item">
                                                     <div class="col-md-9">
                                                         <div class="row">
@@ -508,8 +462,8 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="row">
-                                                            <div class="col-md-8">
+                                                        <div class="row" style="margin-top: 30px">
+                                                            <div class="col-md-7">
                                                                 <h3>{{ $car->title }}</h3>
                                                                 <div class="block year">Год
                                                                     выпуска: {{ $car->year }}</div>
@@ -520,7 +474,7 @@
                                                                 <div class="block transmission">
                                                                     Коробка: {{ $car->transmission }}</div>
                                                             </div>
-                                                            <div class="col-md-3">
+                                                            <div class="col-md-5">
                                                                 <img src="{{ Storage::url($car->image) }}" alt="">
                                                             </div>
                                                         </div>
@@ -759,152 +713,12 @@
                                                 </div>
                                             </div>
                                         @endif
-
                                     @endforeach
                                 </div>
-
-                                <style>
-                                    .hide {
-                                        position: absolute;
-                                        top: -9999px;
-                                        left: -9999px;
-                                    }
-
-                                    .whiskey-tabs {
-                                        list-style: none;
-                                        margin: 20px 0 0;
-                                        padding: 0;
-                                    }
-
-                                    .whiskey-tabs:after {
-                                        clear: both;
-                                        content: '';
-                                        display: block;
-                                    }
-
-                                    .whiskey-tabs li {
-                                        float: left;
-                                        margin-right: 1px;
-                                    }
-
-                                    .whiskey-tabs li a {
-                                        background-color: #34495E;
-                                        color: #ECF0F1;
-                                        display: inline-block;
-                                        padding: 12px 16px;
-                                        text-decoration: none;
-                                    }
-
-                                    .whiskey-tabs li a:hover {
-                                        background-color: #2C3E50;
-                                        text-decoration: none;
-                                    }
-
-                                    .whiskey-tabs li a.current {
-                                        background-color: #2C3E50;
-                                        text-decoration: none;
-                                    }
-
-                                    .whiskey-tabs + .whiskey-tab-content {
-                                        display: block;
-                                    }
-
-                                    .whiskey-tab-content {
-                                        border: 1px solid #34495E;
-                                        display: none;
-                                        padding: 0 8px;
-                                    }
-
-                                    ul.tabs li a {
-                                        text-decoration: none;
-                                        color: #000;
-                                    }
-
-                                    .indicator {
-                                        text-align: center;
-                                        margin-top: 20px;
-                                    }
-
-                                    .indicator .dot {
-                                        display: inline-block;
-                                        margin-right: 5px;
-                                        width: 30px;
-                                        height: 30px;
-                                        border-radius: 20px;
-                                        border: 2px solid #333;
-                                        transition: all .3s ease;
-                                    }
-
-                                    .indicator .dot.green {
-                                        background-color: #105203;
-                                        animation: animate_green 2s infinite;
-                                    }
-
-                                    .indicator .dot.yellow {
-                                        background-color: #625604;
-                                        animation: animate_yellow 3s infinite;
-                                    }
-
-                                    .indicator .dot.red {
-                                        background-color: #570405;
-                                        animation: animate_red 4s infinite;
-                                    }
-
-                                    @keyframes animate_green {
-                                        0% {
-                                            background-color: #105203;
-                                        }
-                                        50% {
-                                            background-color: green;
-                                        }
-                                        100% {
-                                            background-color: #105203;
-                                        }
-                                    }
-
-                                    @keyframes animate_yellow {
-                                        0% {
-                                            background-color: #625604;
-                                        }
-                                        50% {
-                                            background-color: yellow;
-                                        }
-                                        100% {
-                                            background-color: #625604;
-                                        }
-                                    }
-
-                                    @keyframes animate_red {
-                                        0% {
-                                            background-color: #570405;
-                                        }
-                                        50% {
-                                            background-color: red;
-                                        }
-                                        100% {
-                                            background-color: #570405;
-                                        }
-                                    }
-
-                                    /*body{*/
-                                    /*    animation: fadeInAnimation ease 1s;*/
-                                    /*}*/
-                                    /*@keyframes fadeInAnimation {*/
-                                    /*    0% {*/
-                                    /*        opacity: 0;*/
-                                    /*    }*/
-
-                                    /*    100% {*/
-                                    /*        opacity: 1;*/
-                                    /*    }*/
-                                    /*}*/
-                                </style>
 
                                 <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js'></script>
 
                                 <script>
-
-                                    // IIFE
                                     (function ($) {
                                         // Define Plugin
                                         $.organicTabs = function (el, options) {
@@ -925,7 +739,7 @@
                                                 base.options = $.extend({}, $.organicTabs.defaultOptions, options);
 
                                                 // Accessible hiding fix (hmmm, re-look at this, screen readers still run JS)
-                                                $(".hide").css({
+                                                $(".hide").addClass('remove').css({
                                                     "position": "relative",
                                                     "top": 0,
                                                     "left": 0,
@@ -1005,8 +819,6 @@
                                                     $("#" + queryString[base.options.param]).show();
 
                                                 }
-                                                ;
-
                                             };
                                             base.init();
                                         };
@@ -1035,18 +847,36 @@
                                     }, 2000);
                                 </script>
 
-                                <style>
-                                    .whiskey-tabs {
-                                        display: none !important;
-                                    }
-                                </style>
-
                             </div>
                         </div>
-
                     </div>
                 </div>
             @endif
+        @else
+            <div class="pagetitle" style="background-image: url({{ route('index') }}/img/slide1.jpg)">
+                <div class="overlay"></div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1>Пополните баланс</h1>
+                            <ul class="breadcrumbs">
+                                <li><a href="{{ route('index') }}">Главная</a></li>
+                                <li>/</li>
+                                <li>Пополните баланс</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-danger">Необходимо пополнить <a href="{{ route('deposit') }}">депозит</a>!</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         @endif
     @else
         <div class="pagetitle" style="background-image: url({{ route('index') }}/img/slide1.jpg)">

@@ -27,6 +27,12 @@
                     </div>
                     <div class="col-md-4">
                         <div class="dashboard-item">
+                            <div class="num">{{ $form->count() }}</div>
+                            <h5>Количество <br> покупок</h5>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="dashboard-item">
                             <div class="num">{{ $user->count() }}</div>
                             <h5>Количество <br> пользователей</h5>
                         </div>

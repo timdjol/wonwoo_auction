@@ -85,7 +85,7 @@
                     <div class="text-wrap">
                         <h1>Аукцион начался</h1>
                         <div class="btn-wrap">
-                            <a href="{{ route('sales') }}" class="more">Зайти на аукцион</a>
+                            <a href="{{ route('sales') }}" class="more">Войти в аукцион</a>
                         </div>
                     </div>
                 </div>

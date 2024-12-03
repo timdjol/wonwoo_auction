@@ -4,24 +4,28 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderRequest;
+use App\Mail\AuctionMail;
 use App\Models\Category;
+use App\Models\Form;
 use App\Models\Order;
 use App\Models\Page;
 use App\Models\Product;
 use App\Models\Slider;
+use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 
 class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::orderBy('sum', 'desc')->get()->unique('product_id');
-        //$orders = Order::select('product_id', 'created_at')->distinct()->paginate(10);
+        //$orders = Order::orderBy('sum', 'desc')->get()->unique('product_id');
+        $orders = Order::whereDate('created_at', today())->orderBy('created_at', 'desc')->get()->unique('product_id');
         return view('auth.orders.index', compact('orders'));
     }
 
@@ -76,8 +80,20 @@ class OrderController extends Controller
         $order = Order::get();
         $page = Page::get();
         $sliders = Slider::paginate(4);
+        $form = Form::all();
         return view('auth.dashboard',
-            compact('user', 'categories', 'product', 'order', 'page','sliders'));
+            compact('user', 'categories', 'product', 'order', 'page','sliders', 'form'));
     }
+
+    public function sendEmail()
+    {
+        $orders = Order::whereDate('created_at', today())->orderBy('created_at', 'desc')->get()->unique('product_id');
+        foreach ($orders as $user){
+            Mail::to($user->email)->send(new AuctionMail($user));
+        }
+        session()->flash('success', 'Заявки победителям отправлены');
+        return view('auth.orders.index', compact('orders'));
+    }
+
 }
 

@@ -51,6 +51,7 @@ header{
     text-decoration: none;
     color: #fff;
     border: none;
+    border-radius: 5px;
 }
 .admin a.add{
     background-color: green;
@@ -69,6 +70,7 @@ header{
     display: inline-block;
     font-size: 14px;
     padding: 5px 10px;
+    border-radius: 5px;
 }
 .admin form .cancel{
     padding: 9px 30px;
@@ -138,4 +140,14 @@ form button{
 }
 .deposit .btn-wrap .more{
     background-color: green;
+}
+.aic{
+    align-items: center;
+}
+.aic .btn-wrap{
+    text-align: right;
+}
+.more{
+    height: auto;
+    padding: 7px 25px;
 }

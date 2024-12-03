@@ -15,7 +15,7 @@
     <meta name="theme-color" content="#000">
     <!-- Custom Browsers Color End -->
     <link rel="stylesheet" href="{{route('index')}}/css/main.min.css">
-    <link rel="stylesheet" href="{{route('index')}}/css/style.css?ver=1.3">
+    <link rel="stylesheet" href="{{route('index')}}/css/style.css?ver=1.4">
 
 </head>
 <body>
@@ -72,19 +72,6 @@
         </div>
     </div>
 </header>
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            @if(session()->has('success'))
-                <p class="alert alert-success">{{ session()->get('success') }}</p>
-            @endif
-            @if(session()->has('warning'))
-                <p class="alert alert-warning">{{ session()->get('warning') }}</p>
-            @endif
-        </div>
-    </div>
-</div>
 
 @yield('content')
 

@@ -4,13 +4,13 @@
         <li @routeactive(
         'dashboard')><a href="{{ route('dashboard')}}">Консоль</a></li>
         <li @routeactive(
-        'categories.index')><a href="{{ route('categories.index')}}">Категории</a></li>
+        'categor*')><a href="{{ route('categories.index')}}">Категории</a></li>
         <li @routeactive(
-        'brands.index')><a href="{{ route('brands.index')}}">Марки</a></li>
+        'brand*')><a href="{{ route('brands.index')}}">Марки</a></li>
         <li @routeactive(
-        'models.index')><a href="{{ route('models.index')}}">Модели</a></li>
+        'model*')><a href="{{ route('models.index')}}">Модели</a></li>
         <li @routeactive(
-        'products.index')><a href="{{ route('products.index')}}">Автомобили</a></li>
+        'prod*')><a href="{{ route('products.index')}}">Автомобили</a></li>
         <li @routeactive(
         'order*')><a href="{{ route('orders.index')}}">Аукционы</a></li>
         <li @routeactive(
