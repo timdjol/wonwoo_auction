@@ -42,27 +42,14 @@
 
                         <div class="alert alert-warning">Аукцион в ожидании!</div>
                     @if(Request::fullUrl() == route('pause4'))
-                        @php
-                            $contacts = \App\Models\Contact::first();
-                            $now = Carbon\Carbon::parse(Carbon\Carbon::now());
-                            $date_auc = Carbon\Carbon::parse($contacts->date_auc)->addSecond(230);
-                        @endphp
-                        @if($date_auc <= $now)
-                            <script>
-                                window.location.replace("{{ route('sales') }}?tab=tab-5");
-                            </script>
-                        @endif
+                        <script>
+                            window.location.replace("{{ route('end') }}");
+                        </script>
                     @endif
                 </div>
             </div>
         </div>
     </div>
-
-    <script>
-        setTimeout(function () {
-            window.location.reload(1);
-        }, 2000);
-    </script>
 
     <style>
         .page .btn-wrap{

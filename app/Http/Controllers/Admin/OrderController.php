@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderRequest;
 use App\Mail\AuctionMail;
 use App\Models\Category;
+use App\Models\Contact;
 use App\Models\Form;
 use App\Models\Order;
 use App\Models\Page;
@@ -25,8 +26,15 @@ class OrderController extends Controller
     public function index()
     {
         //$orders = Order::orderBy('sum', 'desc')->get()->unique('product_id');
-        $orders = Order::whereDate('created_at', today())->orderBy('created_at', 'desc')->get()->unique('product_id');
-        return view('auth.orders.index', compact('orders'));
+        $contacts = Contact::first();
+        $date = Carbon::parse($contacts->date_auc);
+        $cars = Product::where('dateLot', $date->format('Y-m-d'))->where('status', 1)->get();
+        $orders = Order::whereDate('created_at', today())->whereNot('product_id', null)->orderBy('created_at', 'desc')
+            ->get()->unique('product_id');
+        $last = Order::whereDate('created_at', '<', today())->whereNot('product_id', null)->orderBy('created_at', 'desc')
+            ->get()->unique
+        ('product_id');
+        return view('auth.orders.index', compact('orders', 'last', 'cars', 'contacts'));
     }
 
     /**
@@ -54,7 +62,7 @@ class OrderController extends Controller
     {
         $params = $request->all();
         $order->update($params);
-        session()->flash('success', 'Заказ ' . $request->name . ' обновлен');
+        session()->flash('success', 'Аукцион ' . $request->name . ' обновлен');
         return redirect()->route('orders.index');
     }
 
@@ -87,12 +95,19 @@ class OrderController extends Controller
 
     public function sendEmail()
     {
-        $orders = Order::whereDate('created_at', today())->orderBy('created_at', 'desc')->get()->unique('product_id');
+        //$orders = Order::whereDate('created_at', today())->orderBy('created_at', 'desc')->get()->unique('product_id');
+        $orders = Order::whereDate('created_at', today())->whereNot('product_id', null)->orderBy('sum', 'desc')->get()
+            ->unique('product_id');
         foreach ($orders as $user){
             Mail::to($user->email)->send(new AuctionMail($user));
+            //$user::latest()->skip(1)->delete();
+            $user->update([
+                'status' => 1,
+            ]);
         }
+        $products = Product::paginate(20);
         session()->flash('success', 'Заявки победителям отправлены');
-        return view('auth.orders.index', compact('orders'));
+        return view('auth.products.index', compact('products'));
     }
 
 }

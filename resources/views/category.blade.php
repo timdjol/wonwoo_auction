@@ -25,6 +25,9 @@
 
     <div class="page cars category">
         <div class="container">
+            {{ now( \Illuminate\Support\Facades\Auth::user()->timezone ) }}
+
+
             <div class="row">
                 @if($category->products->isNotEmpty())
                     @foreach($category->products->sortByDesc('created_at') as $product)

@@ -8,8 +8,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 offset-lg-3 col-md-12">
+                    <img src="{{ url('/') }}/img/logo.svg">
                     <h3>Авторизация</h3>
-
                     <form method="POST" action="{{ route('login') }}">
                         @error ('email')
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -24,9 +24,32 @@
                         @enderror
                         <div class="form-group">
                             <label for="">Пароль</label>
-                            <input type="password" name="password" autocomplete="current-password" value="{{ old
+                            <input type="password" name="password" id="password" autocomplete="current-password"
+                                   value="{{ old
                             ('password', isset($order) ? $order->password : null) }}">
                         </div>
+                        <div class="checkbox">
+                            <input type="checkbox" id="checkbox"><label for="checkbox">Показать пароль</label>
+                        </div>
+                        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+                        <script>
+                            $(document).ready(function(){
+                                $('#checkbox').on('change', function(){
+                                    $('#password').attr('type',$('#checkbox').prop('checked')==true?"text":"password");
+                                });
+                            });
+                        </script>
+                        <style>
+                            .admin img{
+                                max-width: 280px;
+                            }
+                            .checkbox{
+                                margin-top: 10px;
+                            }
+                            .checkbox label{
+                                display: inline-block;
+                            }
+                        </style>
                         <!-- Remember Me -->
 {{--                        <div class="form-group">--}}
 {{--                            <label for="remember_me" class="inline-flex items-center">--}}

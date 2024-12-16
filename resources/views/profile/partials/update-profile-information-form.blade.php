@@ -22,6 +22,17 @@
         <input type="text" name="phone" value="{{ old('phone', $user->phone) }}">
     </div>
     <div class="form-group">
+        <label for="">Часовой пояс</label>
+        <select name="timezone" id="">
+            @foreach(timezone_identifiers_list() as $timezone))
+                <option @isset($user->timezone)
+                            @if($user->timezone == $timezone)
+                                selected
+                        @endif @endisset value="{{ $timezone }}">{{ $timezone }}</option>
+            @endforeach
+        </select>
+    </div>
+    <div class="form-group">
         @error ('passport_inn')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror

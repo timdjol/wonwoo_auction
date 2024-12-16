@@ -17,6 +17,7 @@
         'form*')><a href="{{ route('forms.index')}}">Заявки на покупку</a></li>
         <li @routeactive(
         'payment*')><a href="{{ route('payments.index')}}">Платежи</a></li>
+
         <li @routeactive(
         'page*')><a href="{{ route('pages.index')}}">Страницы</a></li>
         <li @routeactive(

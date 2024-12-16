@@ -89,6 +89,12 @@ class PageController extends Controller
         return view('pages.oferta', compact('page'));
     }
 
+    public function dogovor()
+    {
+        $page = Page::where('id', 13)->first();
+        return view('pages.dogovor', compact('page'));
+    }
+
     public function fetchState(Request $request)
     {
         $data['states'] = Region::where("country_id", $request->country_id)->get(["title", "id"]);

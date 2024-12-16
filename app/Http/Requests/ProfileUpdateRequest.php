@@ -20,6 +20,7 @@ class ProfileUpdateRequest extends FormRequest
             'phone' => ['string', 'max:255'],
             'passport_inn' => ['integer'],
             'passport_id' => ['string'],
+            'timezone' => ['string'],
             //'bank' => ['string'],
             //'bik' => ['integer'],
             //'account' => ['integer'],

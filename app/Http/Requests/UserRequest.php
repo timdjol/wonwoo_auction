@@ -25,9 +25,9 @@ class UserRequest extends FormRequest
             'name' => 'required|min:1|max:30',
             'phone' => 'required',
             'email' => 'required',
-            'address' => 'required',
-            'passport_id' => 'required',
-            'passport_inn' => 'required'
+            //'address' => 'required',
+            //'passport_id' => 'required',
+            //'passport_inn' => 'required'
         ];
     }
 }

@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="{{route('index')}}/css/main.min.css">
     <link rel="stylesheet" href="{{route('index')}}/css/style.css?ver=1.4">
 
+    @livewireStyles
+
 </head>
 <body>
 
@@ -73,6 +75,19 @@
     </div>
 </header>
 
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            @if(session()->has('success'))
+                <p class="alert alert-success">{{ session()->get('success') }}</p>
+            @endif
+            @if(session()->has('warning'))
+                <p class="alert alert-warning">{{ session()->get('warning') }}</p>
+            @endif
+        </div>
+    </div>
+</div>
+
 @yield('content')
 
 <footer>
@@ -120,6 +135,7 @@
                         <ul>
                             <li><a href="{{ route('policy') }}">Политика конфиденциальности</a></li>
                             <li><a href="{{ route('oferta') }}">Договор оферты</a></li>
+                            <li><a href="{{ route('dogovor') }}">Условия использования сервиса</a></li>
                         </ul>
                     </div>
                 </div>
@@ -145,6 +161,7 @@
 
 <script src="{{route('index')}}/js/scripts.min.js"></script>
 
+@livewireScripts
 
 </body>
 

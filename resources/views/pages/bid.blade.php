@@ -49,9 +49,6 @@
                                         </span>
                                     </div>
                                 </div>
-                                @php
-                                    $timezone = \Illuminate\Support\Facades\Auth::user()->timezone;
-                                @endphp
                                 <script type="text/javascript">
                                     const timer = document.querySelector("#timer");
                                     const days = document.querySelector("#days");
@@ -60,7 +57,7 @@
                                     const seconds = document.querySelector("#seconds");
 
                                     // Устанавливаем дату и время, до которого хотим посчитать разницу
-                                    let countDownDate = new Date("{{ $date->setTimezone($timezone) }}").getTime();
+                                    let countDownDate = new Date("{{ $date }}").getTime();
 
                                     let updateTimer = setInterval(function () {
                                         // Получаем текущее дату и время
@@ -107,60 +104,7 @@
                     <div class="page sales" id="example-two">
                         <div class="container">
                             <div class="row" style="margin-bottom: 10px">
-                                <div class="col-md-4">
-                                    @if (Request::fullUrl() == route('sales'))
-                                        @livewire('count-down')
-                                    @endif
-
-                                        @if (Request::fullUrl() == route('sales') . '?tab=tab-2')
-                                            @livewire('count-down2')
-                                            <style>
-                                                #tab-1, #tab-3, #tab-4{
-                                                    display: none !important;
-                                                }
-
-                                                #tab-2{
-                                                    display: block !important;
-                                                    position: relative !important;
-                                                    top: auto !important;
-                                                    left: auto !important;
-                                                }
-                                            </style>
-                                        @endif
-
-
-                                        @if (Request::fullUrl() == route('sales') . '?tab=tab-3')
-                                            @livewire('count-down3')
-                                            <style>
-                                                #tab-1, #tab-2, #tab-4{
-                                                    display: none !important;
-                                                }
-
-                                                #tab-3{
-                                                    display: block !important;
-                                                    position: relative !important;
-                                                    top: auto !important;
-                                                    left: auto !important;
-                                                }
-                                            </style>
-                                        @endif
-                                        @if (Request::fullUrl() == route('sales') . '?tab=tab-4')
-                                            @livewire('count-down4')
-                                            <style>
-                                                #tab-1, #tab-2, #tab-3{
-                                                    display: none !important;
-                                                }
-
-                                                #tab-4{
-                                                    display: block !important;
-                                                    position: relative !important;
-                                                    top: auto !important;
-                                                    left: auto !important;
-                                                }
-                                            </style>
-                                        @endif
-
-                                </div>
+                                <div class="col-md-4"></div>
                                 <div class="col-md-4">
                                     <div class="alert alert-info">Количество участвующих авто: {{ $cars->count() }}</div>
                                 </div>
@@ -172,7 +116,6 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     @livewire('price-update')
-
                                 </div>
                             </div>
                         </div>

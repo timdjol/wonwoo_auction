@@ -153,7 +153,7 @@
                             @if(\Illuminate\Support\Facades\Auth::check())
                                 @if($date_auc <= $now)
                                     @if($user->status === 1 )
-                                        <a href="{{ route('auctions.index', $product->id) }}"
+                                        <a href="{{ route('sales') }}"
                                            class="more">Участвовать</a>
                                     @else
                                         <div class="alert alert-danger tt" style="margin-bottom: 20px">Для участия

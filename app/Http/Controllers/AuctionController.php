@@ -11,6 +11,9 @@ use App\Models\Product;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 
@@ -22,10 +25,21 @@ class AuctionController extends Controller
         return view('pages.auction', compact('id', 'product'));
     }
 
-    public function store(Request $request)
+    public function bid($id)
+    {
+        $cars = Product::all();
+        $contacts = Contact::first();
+        $date = Carbon::parse($contacts->date_auc);
+        $users = User::whereBetween('last_seen', [now()->subMinute(120), now()])->where('status', 1)->get();
+        $car = Product::where('id', $id)->where('dateLot', $date)->get();
+        return view('pages.bid', compact('id', 'car', 'cars', 'users', 'contacts'));
+    }
+
+    public function store(Request $request, Order $order)
     {;
         $params = $request->all();
         Order::create($params);
+
         //Mail::to('info@wonwookorea.com')->send(new AuctionMail($request));
         //Mail::to('info@wonwookorea.com')->cc($request->email)->send(new AuctionMail($request));
         //session()->flash('success', 'Ваша ставка выставлена на сумму ' . $request->sum . 'сом');
@@ -37,19 +51,26 @@ class AuctionController extends Controller
         $contacts = Contact::first();
         $date = Carbon::parse($contacts->date_auc);
         $cars = Product::where('dateLot', $date->format('Y-m-d'))->where('status', 1)->get();
-        $users = User::where('status', 1)->whereNotNull('last_seen')->get();
+        $users = User::whereBetween('last_seen', [now()->subMinute(120), now()])->where('status', 1)->get();
 
         return view('pages.sales', compact('cars', 'users', 'contacts'));
     }
 
     public function listings()
     {
-        $cars = Product::where('dateLot', '2024-11-04')->get();
-        return view('pages.listings', compact('cars'));
+        $contacts = Contact::first();
+        $date = Carbon::parse($contacts->date_auc);
+        $cars = Product::where('dateLot', $date->format('Y-m-d'))->where('status', 1)->get();
+        $users = User::whereTime('last_seen', '<=', Config::get('session.lifetime'))->where('status', 1)->get();
+        return view('pages.listings', compact('cars', 'users'));
     }
 
     public function end()
     {
+        DB::table('contacts')->where('id', 1)->update([
+            'date_auc' => now()->addDay(7)
+        ]);
+
         return view('pages.end');
     }
 

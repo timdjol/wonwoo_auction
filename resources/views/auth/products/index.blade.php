@@ -34,6 +34,7 @@
                             <th>Название</th>
                             <th>Категория</th>
                             <th>Стоимость</th>
+                            <th>Дата лота</th>
                             <th>Действия</th>
                         </tr>
                         </thead>
@@ -44,6 +45,7 @@
                                 <td>{{ $product->title }}</td>
                                 <td>{{ $product->category->title }}</td>
                                 <td>{{ number_format($product->price) }} сом</td>
+                                <td>{{ \Carbon\Carbon::parse($product->dateLot)->format('d.m.y')  }}</td>
                                 <td>
                                     <form action="{{ route('products.destroy', $product) }}" method="post">
                                         <ul>

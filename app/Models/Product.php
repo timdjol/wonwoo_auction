@@ -71,6 +71,7 @@ class Product extends Model
         'ppd',
         'zpd',
         'zpk',
+        'sale'
     ];
 
     public function category()

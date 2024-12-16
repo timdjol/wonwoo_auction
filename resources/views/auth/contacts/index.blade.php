@@ -62,6 +62,10 @@
                                 <td>{{ $contact->telegram }}</td>
                             </tr>
                             <tr>
+                                <td>Время начала</td>
+                                <td>{{ $contact->date_auc }}</td>
+                            </tr>
+                            <tr>
                                 <td colspan="2">
                                     <ul>
                                         <li><a class="btn view" href="{{ route('contacts.edit', $contact)

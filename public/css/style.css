@@ -441,7 +441,7 @@ footer ul.soc li img{
 .auct{
     padding: 120px 0;
     text-align: center;
-    background-image: url(http://127.0.0.1:8000/img/bit.jpg);
+    background-image: url(../img/bit.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -584,7 +584,24 @@ ul.tabs li a {
         background-color: #570405;
     }
 }
+button:disabled{
+    opacity: .5;
+    cursor: not-allowed;
+}
+#clock {
+    border-radius: 10px;
+    margin: auto;
+    padding: 10px;
+    height: 60px;
+}
 
+#clock span {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 40px;
+    line-height: 1;
+}
 /*body{*/
 /*    animation: fadeInAnimation ease 1s;*/
 /*}*/
@@ -617,6 +634,7 @@ ul.tabs li a {
     }
     .timer{
         margin-bottom: 20px;
+        width: 100%;
     }
     #popup-wrapper .popup{
         max-width: 100%;

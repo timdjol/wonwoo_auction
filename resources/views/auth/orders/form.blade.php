@@ -36,7 +36,9 @@
                             @endphp
                             <div class="form-group">
                                 <label for="">Авто</label>
-                                <input type="text" name="product_id" value="{{ $product->title }}"
+                                <input type="hidden" name="product_id" value="{{ $product->id }}"
+                                       readonly>
+                                <input type="text" name="product" value="{{ $product->title }}"
                                        readonly>
                             </div>
                         <div class="form-group">
@@ -59,13 +61,14 @@
                         </div>
                         @include('auth.layouts.error', ['fieldname' => 'sum'])
                             <div class="form-group">
-                                <label for="">Сумма</label>
-                                <input type="text" name="sum" value="{{ number_format($order->sum) }} сом" readonly>
+                                <label for="">Сумма (сом)</label>
+                                <input type="hidden" name="sum" value="{{$order->sum}}">
+                                <input type="text" name="s" value="{{ number_format($order->sum) }}" readonly>
                             </div>
                             @include('auth.layouts.error', ['fieldname' => 'label'])
                             <div class="form-group">
                                 <label for="">Статус</label>
-                                <select name="label">
+                                <select name="status">
                                     @if($order->status == 0)
                                         <option value="{{ $order->status }}">В процессе</option>
                                         <option value="1">{{ $order->label }}Продан</option>

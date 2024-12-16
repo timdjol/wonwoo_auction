@@ -41,28 +41,28 @@
                         </script>
 
                         <div class="alert alert-warning">Аукцион в ожидании!</div>
+
                     @if(Request::fullUrl() == route('pause3'))
                         @php
-                            $contacts = \App\Models\Contact::first();
-                            $now = Carbon\Carbon::parse(Carbon\Carbon::now());
-                            $date_auc = Carbon\Carbon::parse($contacts->date_auc)->addSecond(170);
+                            $or = \App\Models\Order::where('user_id', 9994)->exists();
                         @endphp
-                        @if($date_auc <= $now)
+                        @if($or == true)
                             <script>
                                 window.location.replace("{{ route('sales') }}?tab=tab-4");
                             </script>
+                        @else
+                            <script>
+                                setInterval(function() {
+                                    window.location.replace("{{ route('sales') }}?tab=tab-4");
+                                }, 15000);
+                            </script>
                         @endif
                     @endif
+
                 </div>
             </div>
         </div>
     </div>
-
-    <script>
-        setTimeout(function () {
-            window.location.reload(1);
-        }, 2000);
-    </script>
 
     <style>
         .page .btn-wrap{

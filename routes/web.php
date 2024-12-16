@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\AuctionController;
-use App\Http\Controllers\BasketController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
@@ -19,8 +18,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/logout', 'App\Http\Controllers\ProfileController@logout')->name('get-logout');
 
+Route::get('/logout', 'App\Http\Controllers\ProfileController@logout')->name('get-logout');
 
 Route::middleware('set_locale')->group(function(){
     Route::middleware('auth', 'auth.session')->group(function()
@@ -40,6 +39,7 @@ Route::middleware('set_locale')->group(function(){
         {
             Route::group(["middleware" => "is_admin"], function ()
             {
+
                 Route::get('/dashboard',
                     [App\Http\Controllers\Admin\OrderController::class, 'dashboard'])->name('dashboard');
                 Route::get('/sendemail',
@@ -76,12 +76,14 @@ Route::middleware('set_locale')->group(function(){
     Route::get('/contactspage', [PageController::class, 'contacts'])->name('contactspage');
     Route::get('/policy', [PageController::class, 'policy'])->name('policy');
     Route::get('/oferta', [PageController::class, 'oferta'])->name('oferta');
+    Route::get('/dogovor', [PageController::class, 'dogovor'])->name('dogovor');
     Route::get('/stock', [PageController::class, 'stock'])->name('stock');
     Route::post('/api/fetch-states', [PageController::class, 'fetchState']);
     Route::get('/contactpage', [PageController::class, 'contactpage'])->name('contactpage');
     Route::post('/contact-form',  [PageController::class, 'contactform'])->name('contactform');
 
     Route::get('/auctions/index/{id}', [AuctionController::class, 'index'])->name('auctions.index');
+    Route::get('/bid/{id}', [AuctionController::class, 'bid'])->name('auctions.bid');
     Route::post('/auctions', [AuctionController::class, 'store'])->name('auctions.store');
     Route::post('/orderform', [AuctionController::class, 'orderFormBuy'])->name('orderform');
     Route::get('/deposit', [AuctionController::class, 'deposit'])->name('deposit');

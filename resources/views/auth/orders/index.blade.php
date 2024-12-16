@@ -7,10 +7,10 @@
     <div class="page admin order">
         <div class="container">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-2">
                     @include('auth/layouts.sidebar')
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-10">
                     @if(session()->has('success'))
                         <p class="alert alert-success">{{ session()->get('success') }}</p>
                     @endif
@@ -19,24 +19,40 @@
                     @endif
                     <div class="row aic">
                         <div class="col-md-6">
-                            <h1>Аукционы</h1>
+                            @admin
+                                <h6>Кол-во авто на аукционе: {{ $cars->count() }}</h6>
+                                <h6>Дата cлед аукциона: {{ $contacts->date_auc }}</h6>
+                                <h3>Аукционы на сегодня</h3>
+                            @else
+                                <h1>Аукционы</h1>
+                            @endadmin
                         </div>
                         <div class="col-md-6">
-                            <div class="btn-wrap">
-                                <a href="{{ route('sendemail') }}" class="btn add">Отправить уведомление</a>
-                            </div>
+                            @admin
+                                <div class="btn-wrap">
+                                    <a href="{{ route('sendemail') }}" class="btn add">Отправить уведомление</a>
+                                </div>
+                            @endadmin
                         </div>
                     </div>
+                        @php
+                            $pay = \App\Models\Payment::where('user_id', \Illuminate\Support\Facades\Auth::id())
+                            ->first();
+                        @endphp
+{{--                        <div class="alert alert-success">Баланс: {{ $pay->sum }} сом</div>--}}
                     <table class="table">
                         <thead>
                         <tr>
                             <th>Авто</th>
                             <th>Имя</th>
                             <th>Телефон</th>
+                            <th>Email</th>
                             <th>Дата</th>
                             <th>Сумма</th>
                             <th>Статус</th>
-                            <th>Действия</th>
+                            @admin
+                                <th>Действия</th>
+                            @endadmin
                         </tr>
                         </thead>
                         <tbody>
@@ -50,6 +66,7 @@
                                 </td>
                                 <td>{{ $order->name }}</td>
                                 <td><a href="tel:{{ $order->phone }}">{{ $order->phone }}</a></td>
+                                <td><a href="mailto:{{ $order->email }}">{{ $order->email }}</a></td>
                                 <td>{{ $order->showDate() }}</td>
                                 <td>{{ number_format($order->sum) }} сом</td>
                                 <td>
@@ -59,33 +76,64 @@
                                         <span class="ready">Продан</span>
                                     @endif
                                 </td>
-                                <td>
-                                    <ul>
-                                        {{--                                        <li>--}}
-                                        {{--                                            <a class="btn add" href="--}}
-                                        {{--                                            @admin--}}
-                                        {{--                                                {{ route('orders.show', $order) }}--}}
-                                        {{--                                            @else--}}
-                                        {{--                                                {{ route('person.orders.show', $order) }}--}}
-                                        {{--                                            @endadmin">--}}
-                                        {{--                                                Открыть--}}
-                                        {{--                                            </a>--}}
-                                        {{--                                        </li>--}}
-                                        @admin
-                                        <li><a class="btn edit" href="{{ route('orders.edit', $order)
-                                            }}">Редактировать</a></li>
-                                        <form action="{{ route('orders.destroy', $order) }}" method="post">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="btn delete" onclick="return confirm('Вы уверены, что хотите удалить?')">Удалить</button>
-                                        </form>
-                                        @endadmin
-                                    </ul>
-                                </td>
+                                @admin
+                                    <td>
+                                        <ul>
+                                            <li><a class="btn edit" href="{{ route('orders.edit', $order)
+                                                }}">Редактировать</a></li>
+                                            <form action="{{ route('orders.destroy', $order) }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn delete" onclick="return confirm('Вы уверены, что хотите удалить?')">Удалить</button>
+                                            </form>
+                                        </ul>
+                                    </td>
+                                @endadmin
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
+                        @admin
+                    <h3>Прошедшие аукционы</h3>
+                        <table class="table">
+                            <tbody>
+                            @foreach($last as $order)
+                                <tr>
+                                    <td>
+                                        @php
+                                            $product = \App\Models\Product::where('id', $order->product_id)->firstOrFail();
+                                        @endphp
+                                        {{ $product->title }}
+                                    </td>
+                                    <td>{{ $order->name }}</td>
+                                    <td><a href="tel:{{ $order->phone }}">{{ $order->phone }}</a></td>
+                                    <td>{{ $order->showDate() }}</td>
+                                    <td>{{ number_format($order->sum) }} сом</td>
+                                    <td>
+                                        @if($order->status == 0)
+                                            <span class="process">В процессе</span>
+                                        @else
+                                            <span class="ready">Продан</span>
+                                        @endif
+                                    </td>
+                                    @admin
+                                    <td>
+                                        <ul>
+                                            <li><a class="btn edit" href="{{ route('orders.edit', $order)
+                                                }}">Редактировать</a></li>
+                                            <form action="{{ route('orders.destroy', $order) }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn delete" onclick="return confirm('Вы уверены, что хотите удалить?')">Удалить</button>
+                                            </form>
+                                        </ul>
+                                    </td>
+                                    @endadmin
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    @endadmin
                 </div>
             </div>
         </div>

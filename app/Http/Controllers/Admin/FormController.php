@@ -9,7 +9,7 @@ class FormController extends Controller
 {
     public function index()
     {
-        $orders = Form::paginate(10);
+        $orders = Form::orderBy('created_at', 'DESC')->paginate(20);
         return view('auth.forms.index', compact('orders'));
     }
 

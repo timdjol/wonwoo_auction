@@ -26,18 +26,17 @@
                 <div class="col-md-12">
                     <table>
                         <tr>
+                            <th>#</th>
                             <th>ID</th>
                             <th>Название</th>
                             <th>Двигатель</th>
                             <th>Коробка</th>
                             <th>Год выпуска</th>
                         </tr>
-                        @php
-$i=1; @endphp
                         @foreach($cars as $car)
-
                             <tr>
-                                <td>{{ $i++ }}</td>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $car->id }}</td>
                                 <td>{{ $car->title }}</td>
                                 <td>{{ $car->engine }}</td>
                                 <td>{{ $car->transmission }}</td>

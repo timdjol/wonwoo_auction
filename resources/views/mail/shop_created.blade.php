@@ -18,3 +18,12 @@
         </tr>
     </tbody>
 </table>
+<style>
+    table{
+        width: 100%;
+    }
+    table td{
+        padding: 10px 5px;
+        border-bottom: 1px solid #ddd;
+    }
+</style>

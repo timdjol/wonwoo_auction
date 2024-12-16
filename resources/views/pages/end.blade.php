@@ -40,7 +40,7 @@
                             });
                         </script>
 
-                        <div class="alert alert-success">Аукцион завершился!</div>
+                        <div class="alert alert-success">🏁 Аукцион завершился! 🎉</div>
                         <div class="btn-wrap">
                             <a href="{{ route('index') }}" class="more">Перейти на главную страницу</a>
                         </div>

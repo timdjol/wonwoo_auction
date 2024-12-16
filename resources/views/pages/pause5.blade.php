@@ -58,11 +58,11 @@
         </div>
     </div>
 
-    <script>
-        setTimeout(function () {
-            window.location.reload(1);
-        }, 2000);
-    </script>
+{{--    <script>--}}
+{{--        setTimeout(function () {--}}
+{{--            window.location.reload(1);--}}
+{{--        }, 2000);--}}
+{{--    </script>--}}
 
     <style>
         .page .btn-wrap{
