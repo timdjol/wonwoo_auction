@@ -69,9 +69,8 @@ Route::middleware('set_locale')->group(function(){
 
     Route::get('/', [MainController::class, 'index'])->name('index');
     Route::get('/catalog', [MainController::class, 'catalog'])->name('catalog');
-    Route::get('/categories', [MainController::class, 'categories'])->name('categories');
-    Route::get('/search', [MainController::class, 'search'])->name('search');
 
+    Route::get('/search', [PageController::class, 'search'])->name('search');
     Route::get('/about', [PageController::class, 'about'])->name('about');
     Route::get('/contactspage', [PageController::class, 'contacts'])->name('contactspage');
     Route::get('/policy', [PageController::class, 'policy'])->name('policy');
@@ -82,8 +81,7 @@ Route::middleware('set_locale')->group(function(){
     Route::get('/contactpage', [PageController::class, 'contactpage'])->name('contactpage');
     Route::post('/contact-form',  [PageController::class, 'contactform'])->name('contactform');
 
-    Route::get('/auctions/index/{id}', [AuctionController::class, 'index'])->name('auctions.index');
-    Route::get('/bid/{id}', [AuctionController::class, 'bid'])->name('auctions.bid');
+    //Route::get('/auctions/index/{id}', [AuctionController::class, 'index'])->name('auctions.index');
     Route::post('/auctions', [AuctionController::class, 'store'])->name('auctions.store');
     Route::post('/orderform', [AuctionController::class, 'orderFormBuy'])->name('orderform');
     Route::get('/deposit', [AuctionController::class, 'deposit'])->name('deposit');
@@ -98,13 +96,11 @@ Route::middleware('set_locale')->group(function(){
     Route::get('/pause4', [AuctionController::class, 'pause4'])->name('pause4');
     Route::get('/pause5', [AuctionController::class, 'pause5'])->name('pause5');
     Route::get('/pause6', [AuctionController::class, 'pause6'])->name('pause6');
+    Route::get('/pause7', [AuctionController::class, 'pause7'])->name('pause7');
+    Route::get('/pause8', [AuctionController::class, 'pause8'])->name('pause8');
+    Route::get('/pause9', [AuctionController::class, 'pause9'])->name('pause9');
     //Route::get('/sale_frame', [AuctionController::class, 'sale_frame'])->name('sale_frame');
-    //Route::get('/socket', 'App\Http\Controllers\PusherController@index')->name('socket');
-    //Route::post('/broadcast', 'App\Http\Controllers\PusherController@broadcast')->name('broadcast');
-    //Route::post('/receive', 'App\Http\Controllers\PusherController@receive')->name('receive');
-    //Route::get('/send', 'App\Http\Controllers\AuctionController@sendMessage')->name('sendMessage');
     Route::get('/send', 'App\Http\Controllers\AuctionController@sendMessage')->name('sendMessage');
-
 
     Route::get('/failure', [PageController::class, 'failure_page'])->name('failure_page');
     Route::get('/check', [PageController::class, 'check_page'])->name('check_page');

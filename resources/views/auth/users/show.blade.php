@@ -18,6 +18,10 @@
                             <td>{{ $user->id }}</td>
                         </tr>
                         <tr>
+                            <td>Часовой пояс</td>
+                            <td>{{ $user->timezone }}</td>
+                        </tr>
+                        <tr>
                             <td>Номер телефона</td>
                             <td>{{ $user->phone }}</td>
                         </tr>

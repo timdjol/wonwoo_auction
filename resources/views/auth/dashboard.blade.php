@@ -19,37 +19,37 @@
                 @endif
                 <h1>Добро пожаловать {{ $user->name }}</h1>
                 <div class="row justify-content-center">
-                    <div class="col-md-4">
+                    <div class="col-md-4 col-6">
                         <div class="dashboard-item">
                             <div class="num">{{ $order->count() }}</div>
                             <h5>Количество <br> заказов</h5>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 col-6">
                         <div class="dashboard-item">
                             <div class="num">{{ $form->count() }}</div>
                             <h5>Количество <br> покупок</h5>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 col-6">
                         <div class="dashboard-item">
                             <div class="num">{{ $user->count() }}</div>
                             <h5>Количество <br> пользователей</h5>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 col-6">
                         <div class="dashboard-item">
                             <div class="num">{{ $product->count() }}</div>
                             <h5>Количество <br> авто</h5>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 col-6">
                         <div class="dashboard-item">
                             <div class="num">{{ $categories->count() }}</div>
                             <h5>Количество <br> категорий</h5>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 col-6">
                         <div class="dashboard-item">
                             <div class="num">{{ $page->count() }}</div>
                             <h5>Количество <br> страниц</h5>
@@ -61,39 +61,39 @@
                         <div class="sliders">
                             <h3>Слайды</h3>
                             <p>Количество слайдов: {{ $sliders->count() }}</p>
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th>Изображение</th>
-                                    <th>Название</th>
-                                    <th>Действия</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($sliders as $slider)
+                            <div class="table-wrap">
+                                <table class="table">
+                                    <thead>
                                     <tr>
-                                        <td><img src="{{ Storage::url($slider->image) }}" alt=""></td>
-                                        <td>{{ $slider->title }}</td>
-                                        <td>
-                                            <form action="{{ route('sliders.destroy', $slider) }}" method="post">
-                                                <ul>
-                                                    <li><a class="btn edit" href="{{ route('sliders.edit', $slider)
-                                            }}">Редактировать</a></li>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn delete" onclick="return confirm('Вы уверены, что хотите удалить?')">Удалить</button>
-                                                </ul>
-                                            </form>
-                                        </td>
+                                        <th>Изображение</th>
+                                        <th>Название</th>
+                                        <th>Действия</th>
                                     </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($sliders as $slider)
+                                        <tr>
+                                            <td><img src="{{ Storage::url($slider->image) }}" alt=""></td>
+                                            <td>{{ $slider->title }}</td>
+                                            <td>
+                                                <form action="{{ route('sliders.destroy', $slider) }}" method="post">
+                                                    <ul>
+                                                        <li><a class="btn edit" href="{{ route('sliders.edit', $slider)
+                                            }}">Редактировать</a></li>
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn delete" onclick="return confirm('Вы уверены, что хотите удалить?')">Удалить</button>
+                                                    </ul>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                             <a class="btn add" href="{{ route('sliders.create') }}">Добавить слайд</a>
                             {{ $sliders->links('pagination::bootstrap-4') }}
                         </div>
-
-
                     </div>
                 </div>
             </div>

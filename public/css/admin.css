@@ -151,3 +151,24 @@ form button{
     height: auto;
     padding: 7px 25px;
 }
+@media(max-width: 991px){
+    .admin .table-wrap{
+        width: 100%;
+        overflow-x: scroll;
+    }
+    .sidebar ul li{
+        width: 49%;
+        display: inline-block;
+    }
+    .admin h1, .admin h3{
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .aic .btn-wrap{
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    nav ul {
+        top: 70px;
+    }
+}

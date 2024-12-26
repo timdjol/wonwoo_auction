@@ -41,18 +41,18 @@
                         </script>
 
                         <div class="alert alert-warning">Аукцион в ожидании!</div>
-                    @if(Request::fullUrl() == route('pause5'))
+                    @if(Request::fullUrl() == route('pause8'))
                         @php
-                            $or = \App\Models\Order::where('user_id', 9996)->exists();
+                            $or = \App\Models\Order::where('user_id', 9999)->exists();
                         @endphp
                         @if($or == true)
                             <script>
-                                window.location.replace("{{ route('sales') }}?tab=tab-6");
+                                window.location.replace("{{ route('sales') }}?tab=tab-9");
                             </script>
                         @else
                             <script>
                                 setInterval(function() {
-                                    window.location.replace("{{ route('sales') }}?tab=tab-6");
+                                    window.location.replace("{{ route('sales') }}?tab=tab-9");
                                 }, 15000);
                             </script>
                         @endif
@@ -62,11 +62,6 @@
         </div>
     </div>
 
-{{--    <script>--}}
-{{--        setTimeout(function () {--}}
-{{--            window.location.reload(1);--}}
-{{--        }, 2000);--}}
-{{--    </script>--}}
 
     <style>
         .page .btn-wrap{

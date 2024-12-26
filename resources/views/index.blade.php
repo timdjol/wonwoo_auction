@@ -83,7 +83,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="text-wrap">
-                        <h1>Аукцион начался</h1>
+                        <h1 style="margin-bottom: 30px">Аукцион cкоро начнется</h1>
                         <div class="btn-wrap">
                             <a href="{{ route('sales') }}" class="more">Войти в аукцион</a>
                         </div>

@@ -1,4 +1,27 @@
 <div wire:poll.1s>
+    @php
+        $or = \App\Models\Order::where('user_id', 9991)->exists();
+        if($or != true){
+            \App\Models\Order::create([
+                'user_id' => 9991,
+                'date' => now()->format('Y-m-d H:i')
+            ]);
+            $last = \App\Models\Order::where('user_id', 9991)->orderBy('created_at', 'DESC')->first();
+            $ord = now()->subSecond(20)->diffInSeconds($last->created_at);
+        } else {
+         $ord = now()->subSecond(20)->diffInSeconds($order->created_at ?? now());
+        }
+//            if($ord == 0){
+//                redirect()->route('pause');
+//            }
+//            if($ord > 20){
+//                $ord = 20;
+//                redirect()->route('pause');
+//            }
+    @endphp
+    <div id="clock" class="alert alert-danger">
+        <span id="seconds">{{ $ord }}</span>
+    </div>
     <ul class="nav whiskey-tabs">
         @foreach ($cars as $car)
             @if($loop->iteration==1)
@@ -16,7 +39,7 @@
             @if($loop->iteration == 1)
                 <div id="tab-{{$loop->iteration}}">
                     <div class="row sales-item">
-                        <div class="col-md-9">
+                        <div class="col-md-9 order-xl-1 order-lg-1 order-md-2 order-2">
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="parking">
@@ -253,7 +276,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 order-xl-2 order-lg-2 order-md-1 order-1">
                             <ul class="tabs">
                                 <li class="tab-link current" data-tab="tab-1">Характеристики
                                     авто
@@ -305,7 +328,7 @@
             @else
                 <div id="tab-{{$loop->iteration}}" class="hide">
                     <div class="row sales-item">
-                        <div class="col-md-9">
+                        <div class="col-md-9 order-xl-1 order-lg-1 order-md-2 order-2">
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="parking">
@@ -542,7 +565,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 order-xl-2 order-lg-2 order-md-1 order-1">
                             <ul class="tabs">
                                 <li class="tab-link current" data-tab="tab-1">Характеристики авто</li>
                                 <li><a href="{{ route('listings') }}" target="_blank">Список

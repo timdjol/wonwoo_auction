@@ -7,8 +7,8 @@
     <link rel="icon" href="{{ url('/') }}/img/favicon.jpg">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ url('/') }}/img/favicon.jpg">
     <link rel="stylesheet" href="/css/main.min.css">
-    <link rel="stylesheet" href="{{route('index')}}/css/admin.css">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="{{route('index')}}/css/admin.css">
 </head>
 <body>
 
@@ -16,7 +16,10 @@
     <div class="head">
         <div class="container">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-2 col-8">
+                    <img src="{{ url('/') }}/img/logo.svg">
+                </div>
+                <div class="col-md-10 col-4">
                     <nav>
                         <a href="#" class="toggle-mnu d-xl-none d-lg-none"><span></span></a>
                         <ul>
@@ -26,7 +29,6 @@
                                 <li><a href="{{route('login')}}">Войти</a></li>
                             @endguest
                             @auth
-{{--                                <li>{{ $user->name }}</li>--}}
                                 <li><a href="{{ route('get-logout') }}">Выйти</a></li>
                             @endauth
                         </ul>
@@ -51,7 +53,7 @@
     </div>
 </footer>
 
-<script src="js/scripts.min.js"></script>
+<script src="{{route('index')}}/js/scripts.min.js"></script>
 
 </body>
 </html>

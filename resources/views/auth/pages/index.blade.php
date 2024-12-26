@@ -27,36 +27,41 @@
                             </div>
                         </div>
                     </div>
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>Код</th>
-                            <th>Название</th>
-                            <th>Действия</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($pages as $page)
+                    <div class="table-wrap">
+                        <table class="table">
+                            <thead>
                             <tr>
-                                <td>{{ $page->code }}</td>
-                                <td>{{ $page->title }}</td>
-                                <td>
-                                    <form action="{{ route('pages.destroy', $page) }}" method="post">
-                                        <ul>
-                                            <li><a class="btn view" href="{{ route('pages.show', $page)
-                                            }}">Открыть</a></li>
-                                            <li><a class="btn edit" href="{{ route('pages.edit', $page)
-                                            }}">Редактировать</a></li>
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="btn delete" onclick="return confirm('Вы уверены, что хотите удалить?')">Удалить</button>
-                                        </ul>
-                                    </form>
-                                </td>
+                                <th>Код</th>
+                                <th>Название</th>
+                                <th>Действия</th>
                             </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                            @foreach($pages as $page)
+                                <tr>
+                                    <td>{{ $page->code }}</td>
+                                    <td>{{ $page->title }}</td>
+                                    <td>
+                                        <form action="{{ route('pages.destroy', $page) }}" method="post">
+                                            <ul>
+                                                <li><a class="btn view" href="{{ route('pages.show', $page)
+                                            }}">Открыть</a></li>
+                                                <li><a class="btn edit" href="{{ route('pages.edit', $page)
+                                            }}">Редактировать</a></li>
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn delete"
+                                                        onclick="return confirm('Вы уверены, что хотите удалить?')">
+                                                    Удалить
+                                                </button>
+                                            </ul>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                     {{ $pages->links('pagination::bootstrap-4') }}
                 </div>
             </div>

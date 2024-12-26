@@ -20,119 +20,137 @@
                     <div class="row aic">
                         <div class="col-md-6">
                             @admin
-                                <h6>Кол-во авто на аукционе: {{ $cars->count() }}</h6>
-                                <h6>Дата cлед аукциона: {{ $contacts->date_auc }}</h6>
-                                <h3>Аукционы на сегодня</h3>
+                            <h6>Кол-во авто на аукционе: {{ $cars->count() }}</h6>
+                            <h6>Дата cлед аукциона: {{ $contacts->date_auc }}</h6>
+                            <h3>Аукционы на сегодня</h3>
                             @else
                                 <h1>Аукционы</h1>
-                            @endadmin
+                                @endadmin
                         </div>
                         <div class="col-md-6">
                             @admin
-                                <div class="btn-wrap">
-                                    <a href="{{ route('sendemail') }}" class="btn add">Отправить уведомление</a>
-                                </div>
+                            <div class="btn-wrap">
+                                <a href="{{ route('sendemail') }}" class="btn add">Отправить уведомление</a>
+                            </div>
                             @endadmin
                         </div>
                     </div>
+                    @if($orders->isNotEmpty())
                         @php
                             $pay = \App\Models\Payment::where('user_id', \Illuminate\Support\Facades\Auth::id())
                             ->first();
                         @endphp
-{{--                        <div class="alert alert-success">Баланс: {{ $pay->sum }} сом</div>--}}
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>Авто</th>
-                            <th>Имя</th>
-                            <th>Телефон</th>
-                            <th>Email</th>
-                            <th>Дата</th>
-                            <th>Сумма</th>
-                            <th>Статус</th>
-                            @admin
-                                <th>Действия</th>
-                            @endadmin
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($orders as $order)
-                            <tr>
-                                <td>
-                                    @php
-                                        $product = \App\Models\Product::where('id', $order->product_id)->firstOrFail();
-                                    @endphp
-                                    {{ $product->title }}
-                                </td>
-                                <td>{{ $order->name }}</td>
-                                <td><a href="tel:{{ $order->phone }}">{{ $order->phone }}</a></td>
-                                <td><a href="mailto:{{ $order->email }}">{{ $order->email }}</a></td>
-                                <td>{{ $order->showDate() }}</td>
-                                <td>{{ number_format($order->sum) }} сом</td>
-                                <td>
-                                    @if($order->status == 0)
-                                        <span class="process">В процессе</span>
-                                    @else
-                                        <span class="ready">Продан</span>
-                                    @endif
-                                </td>
-                                @admin
-                                    <td>
-                                        <ul>
-                                            <li><a class="btn edit" href="{{ route('orders.edit', $order)
-                                                }}">Редактировать</a></li>
-                                            <form action="{{ route('orders.destroy', $order) }}" method="post">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn delete" onclick="return confirm('Вы уверены, что хотите удалить?')">Удалить</button>
-                                            </form>
-                                        </ul>
-                                    </td>
-                                @endadmin
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                        @admin
-                    <h3>Прошедшие аукционы</h3>
-                        <table class="table">
-                            <tbody>
-                            @foreach($last as $order)
+                        {{--                        <div class="alert alert-success">Баланс: {{ $pay->sum }} сом</div>--}}
+                        <div class="table-wrap">
+                            <table class="table">
+                                <thead>
                                 <tr>
-                                    <td>
-                                        @php
-                                            $product = \App\Models\Product::where('id', $order->product_id)->firstOrFail();
-                                        @endphp
-                                        {{ $product->title }}
-                                    </td>
-                                    <td>{{ $order->name }}</td>
-                                    <td><a href="tel:{{ $order->phone }}">{{ $order->phone }}</a></td>
-                                    <td>{{ $order->showDate() }}</td>
-                                    <td>{{ number_format($order->sum) }} сом</td>
-                                    <td>
-                                        @if($order->status == 0)
-                                            <span class="process">В процессе</span>
-                                        @else
-                                            <span class="ready">Продан</span>
-                                        @endif
-                                    </td>
+                                    <th>Авто</th>
+                                    <th>Имя</th>
+                                    <th>Телефон</th>
+                                    <th>Email</th>
+                                    <th>Дата</th>
+                                    <th>Сумма</th>
+                                    <th>Статус</th>
                                     @admin
-                                    <td>
-                                        <ul>
-                                            <li><a class="btn edit" href="{{ route('orders.edit', $order)
-                                                }}">Редактировать</a></li>
-                                            <form action="{{ route('orders.destroy', $order) }}" method="post">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn delete" onclick="return confirm('Вы уверены, что хотите удалить?')">Удалить</button>
-                                            </form>
-                                        </ul>
-                                    </td>
+                                    <th>Действия</th>
                                     @endadmin
                                 </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                @foreach($orders as $order)
+                                    <tr>
+                                        <td>
+                                            @php
+                                                $product = \App\Models\Product::where('id', $order->product_id)->firstOrFail();
+                                            @endphp
+                                            {{ $product->title }}
+                                        </td>
+                                        <td>{{ $order->name }}</td>
+                                        <td><a href="tel:{{ $order->phone }}">{{ $order->phone }}</a></td>
+                                        <td><a href="mailto:{{ $order->email }}">{{ $order->email }}</a></td>
+                                        <td>{{ $order->showDate() }}</td>
+                                        <td>{{ number_format($order->sum) }} сом</td>
+                                        <td>
+                                            @if($order->status == 0)
+                                                <span class="process">В процессе</span>
+                                            @else
+                                                <span class="ready">Продан</span>
+                                            @endif
+                                        </td>
+                                        @admin
+                                        <td>
+                                            <ul>
+                                                <li><a class="btn view" href="{{ route('orders.show', $order)
+                                                }}">Открыть</a></li>
+                                                <li><a class="btn edit" href="{{ route('orders.edit', $order)
+                                                }}">Редактировать</a></li>
+                                                <form action="{{ route('orders.destroy', $order) }}" method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn delete"
+                                                            onclick="return confirm('Вы уверены, что хотите удалить?')">
+                                                        Удалить
+                                                    </button>
+                                                </form>
+                                            </ul>
+                                        </td>
+                                        @endadmin
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @else
+                        <div class="alert alert-danger">Аукционы не найдены</div>
+                    @endif
+                    @admin
+                    <h3>Прошедшие аукционы</h3>
+                    @if($last->isNotEmpty())
+                        <div class="table-wrap">
+                            <table class="table">
+                                <tbody>
+                                @foreach($last as $order)
+                                    <tr>
+                                        <td>
+                                            @php
+                                                $product = \App\Models\Product::where('id', $order->product_id)->firstOrFail();
+                                            @endphp
+                                            {{ $product->title }}
+                                        </td>
+                                        <td>{{ $order->name }}</td>
+                                        <td><a href="tel:{{ $order->phone }}">{{ $order->phone }}</a></td>
+                                        <td>{{ $order->showDate() }}</td>
+                                        <td>{{ number_format($order->sum) }} сом</td>
+                                        <td>
+                                            @if($order->status == 0)
+                                                <span class="process">В процессе</span>
+                                            @else
+                                                <span class="ready">Продан</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <ul>
+                                                <li><a class="btn edit" href="{{ route('orders.edit', $order)
+                                                }}">Редактировать</a></li>
+                                                <form action="{{ route('orders.destroy', $order) }}" method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn delete"
+                                                            onclick="return confirm('Вы уверены, что хотите удалить?')">
+                                                        Удалить
+                                                    </button>
+                                                </form>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @else
+                        <div class="alert alert-danger">Прошедшие аукционы не найдены</div>
+                    @endif
                     @endadmin
                 </div>
             </div>

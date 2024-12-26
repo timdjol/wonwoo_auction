@@ -20,30 +20,37 @@
         </div>
     </div>
 
-    <div class="page cars catalog">
+    <div class="page cars catalog listing">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <table>
-                        <tr>
-                            <th>#</th>
-                            <th>ID</th>
-                            <th>Название</th>
-                            <th>Двигатель</th>
-                            <th>Коробка</th>
-                            <th>Год выпуска</th>
-                        </tr>
-                        @foreach($cars as $car)
+                    <div class="table-wrap">
+                        <h3>Список участвующих автомобилей</h3>
+                        <table>
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $car->id }}</td>
-                                <td>{{ $car->title }}</td>
-                                <td>{{ $car->engine }}</td>
-                                <td>{{ $car->transmission }}</td>
-                                <td>{{ $car->year }}</td>
+                                <th>#</th>
+                                <th>ID</th>
+                                <th>Название</th>
+                                <th>Двигатель</th>
+                                <th>Коробка</th>
+                                <th>Год выпуска</th>
+                                <th></th>
                             </tr>
-                        @endforeach
-                    </table>
+                            @foreach($cars as $car)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $car->id }}</td>
+                                    <td>{{ $car->title }}</td>
+                                    <td>{{ $car->engine }}</td>
+                                    <td>{{ $car->transmission }}</td>
+                                    <td>{{ $car->year }}</td>
+                                    <td><a class="more" href="{{ route('product', [isset($category) ? $category->code :
+                                    $car->category->code, $car->code])
+         }}">Подробнее</a></td>
+                                </tr>
+                            @endforeach
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

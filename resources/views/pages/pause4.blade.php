@@ -42,9 +42,20 @@
 
                         <div class="alert alert-warning">Аукцион в ожидании!</div>
                     @if(Request::fullUrl() == route('pause4'))
-                        <script>
-                            window.location.replace("{{ route('end') }}");
-                        </script>
+                        @php
+                            $or = \App\Models\Order::where('user_id', 9995)->exists();
+                        @endphp
+                        @if($or == true)
+                            <script>
+                                window.location.replace("{{ route('sales') }}?tab=tab-5");
+                            </script>
+                        @else
+                            <script>
+                                setInterval(function() {
+                                    window.location.replace("{{ route('sales') }}?tab=tab-5");
+                                }, 15000);
+                            </script>
+                        @endif
                     @endif
                 </div>
             </div>

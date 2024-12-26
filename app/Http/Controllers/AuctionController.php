@@ -25,16 +25,6 @@ class AuctionController extends Controller
         return view('pages.auction', compact('id', 'product'));
     }
 
-    public function bid($id)
-    {
-        $cars = Product::all();
-        $contacts = Contact::first();
-        $date = Carbon::parse($contacts->date_auc);
-        $users = User::whereBetween('last_seen', [now()->subMinute(120), now()])->where('status', 1)->get();
-        $car = Product::where('id', $id)->where('dateLot', $date)->get();
-        return view('pages.bid', compact('id', 'car', 'cars', 'users', 'contacts'));
-    }
-
     public function store(Request $request, Order $order)
     {;
         $params = $request->all();
@@ -51,7 +41,7 @@ class AuctionController extends Controller
         $contacts = Contact::first();
         $date = Carbon::parse($contacts->date_auc);
         $cars = Product::where('dateLot', $date->format('Y-m-d'))->where('status', 1)->get();
-        $users = User::whereBetween('last_seen', [now()->subMinute(120), now()])->where('status', 1)->get();
+        $users = User::whereBetween('last_seen', [now()->subMinute(5), now()])->where('status', 1)->get();
 
         return view('pages.sales', compact('cars', 'users', 'contacts'));
     }
@@ -102,6 +92,21 @@ class AuctionController extends Controller
     public function pause6()
     {
         return view('pages.pause6');
+    }
+
+    public function pause7()
+    {
+        return view('pages.pause7');
+    }
+
+    public function pause8()
+    {
+        return view('pages.pause8');
+    }
+
+    public function pause9()
+    {
+        return view('pages.pause9');
     }
 
     public function sale_frame()

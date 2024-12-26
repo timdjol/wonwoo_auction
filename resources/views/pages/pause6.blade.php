@@ -4,28 +4,28 @@
 
 @section('content')
     @auth
-    <div class="pagetitle" style="background-image: url({{ route('index') }}/img/slide1.jpg)">
-        <div class="overlay"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1>Аукцион в ожидании</h1>
-                    <div>
-                        <ul class="breadcrumbs">
-                            <li><a href="{{ route('index') }}">Главная</a></li>
-                            <li>/</li>
-                            <li>Аукцион в ожидании</li>
-                        </ul>
+        <div class="pagetitle" style="background-image: url({{ route('index') }}/img/slide1.jpg)">
+            <div class="overlay"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>Аукцион в ожидании</h1>
+                        <div>
+                            <ul class="breadcrumbs">
+                                <li><a href="{{ route('index') }}">Главная</a></li>
+                                <li>/</li>
+                                <li>Аукцион в ожидании</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="page">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 col-md-12">
+        <div class="page">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12">
                         <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.js"></script>
                         <script>
                             var sound = new Howl({
@@ -35,41 +35,39 @@
                                 loop: false,
                             });
 
-                            sound.once('load', function(){
+                            sound.once('load', function () {
                                 sound.play();
                             });
                         </script>
 
                         <div class="alert alert-warning">Аукцион в ожидании!</div>
-                    @if(Request::fullUrl() == route('pause6'))
-                        @php
-                            $contacts = \App\Models\Contact::first();
-                            $now = Carbon\Carbon::parse(Carbon\Carbon::now());
-                            $date_auc = Carbon\Carbon::parse($contacts->date_auc)->addSecond(350);
-                        @endphp
-                        @if($date_auc <= $now)
-                            <script>
-                                window.location.replace("{{ route('sales') }}?tab=tab-7");
-                            </script>
+                        @if(Request::fullUrl() == route('pause6'))
+                            @php
+                                $or = \App\Models\Order::where('user_id', 9997)->exists();
+                            @endphp
+                            @if($or == true)
+                                <script>
+                                    window.location.replace("{{ route('sales') }}?tab=tab-7");
+                                </script>
+                            @else
+                                <script>
+                                    setInterval(function () {
+                                        window.location.replace("{{ route('sales') }}?tab=tab-7");
+                                    }, 15000);
+                                </script>
+                            @endif
                         @endif
-                    @endif
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <script>
-        setTimeout(function () {
-            window.location.reload(1);
-        }, 2000);
-    </script>
-
-    <style>
-        .page .btn-wrap{
-            text-align: center;
-            margin-top: 30px;
-        }
-    </style>
+        <style>
+            .page .btn-wrap {
+                text-align: center;
+                margin-top: 30px;
+            }
+        </style>
     @else
         <div class="pagetitle" style="background-image: url({{ route('index') }}/img/slide1.jpg)">
             <div class="overlay"></div>

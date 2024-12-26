@@ -32,7 +32,8 @@
                     <ul>
                         <li>
                             <a href="{{ route('catalog') }}">
-                                <img src="http://127.0.0.1:8000/storage/categories/AUwjh9VKGjTxWxZk0wDtfz299gpi4zQnnuNgxf8G.png" alt="">
+                                <img src="http://127.0.0.1:8000/storage/categories/AUwjh9VKGjTxWxZk0wDtfz299gpi4zQnnuNgxf8G.png"
+                                     alt="">
                                 <div class="title">Все</div>
                                 <span class="count">{{  \App\Models\Product::count() }}</span>
                             </a>
@@ -50,6 +51,22 @@
                             </li>
                         @endforeach
                     </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="auct">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-wrap">
+                        <h1 style="margin-bottom: 30px">Аукцион cкоро начнется</h1>
+                        <div class="btn-wrap">
+                            <a href="{{ route('sales') }}" class="more">Войти в аукцион</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -73,15 +90,13 @@
                                 </div>
                             @endforeach
                         @else
-                        <h3>Не найдено!</h3>
+                            <div class="alert alert-danger">Автомобили не найдены</div>
                         @endif
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
 
 @endsection
 

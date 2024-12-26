@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title') - @lang('main.online_shop') WonWoo Auction</title>
+    <title>@yield('title') - WonWoo Auction</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <!-- Template Basic Images Start -->
@@ -15,7 +15,7 @@
     <meta name="theme-color" content="#000">
     <!-- Custom Browsers Color End -->
     <link rel="stylesheet" href="{{route('index')}}/css/main.min.css">
-    <link rel="stylesheet" href="{{route('index')}}/css/style.css?ver=1.4">
+    <link rel="stylesheet" href="{{route('index')}}/css/style.css?ver=1.8">
 
     @livewireStyles
 
@@ -49,7 +49,14 @@
                         'about')><a href="{{ route('about') }}">О сервисе</a></li>
                         <li @routeactive(
                         'contact')><a href="{{ route('contactspage') }}">Контакты</a></li>
-                        {{--                        <li><a href="#callback" class="more">Оставить заявку</a></li>--}}
+                        @guest
+                            <li class="d-xl-none d-lg-none d-block"><a class="more" href="{{ route('login')
+                        }}">Войти</a></li>
+                            <li class="d-xl-none d-lg-none d-block"><a href="{{route('register')}}">Регистрация</a></li>
+                        @endguest
+                        @auth
+                            <li class="d-xl-none d-lg-none d-block"><a class="more" href="{{ route('get-logout') }}">Выйти</a></li>
+                        @endauth
                     </ul>
                     <ul class="icons">
                         <li><a href="#search"><img class="search" src="{{ url('/') }}/img/search.svg" alt=""></a></li>
@@ -66,6 +73,9 @@
                         </li>
                         <li><a href="{{ route('login') }}">
                                 <img src="{{ url('/') }}/img/user.png" alt="">
+                                @auth
+                                    <small>{{ \Illuminate\Support\Facades\Auth::user()->name }}</small>
+                                @endauth
                             </a>
                         </li>
                     </ul>
@@ -94,15 +104,16 @@
     <div class="footer">
         <div class="container">
             <div class="row">
-                <div class="col-lg-4 col-md-4">
+                <div class="col-lg-3 col-md-6">
                     <div class="footer-item">
                         <div class="logo">
                             <img src="{{ url('/') }}/img/logo.svg">
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-4">
+                <div class="col-lg-3 col-md-6">
                     <div class="footer-item">
+                        <h4>Категории</h4>
                         <ul>
                             @foreach($categories as $category)
                                 <li><a href="{{ route('category', $category->code) }}">{{ $category->title }}</a></li>
@@ -110,7 +121,17 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-4">
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-item">
+                        <h4>Информация</h4>
+                        <ul>
+                            <li><a href="{{ route('policy') }}">Политика конфиденциальности</a></li>
+                            <li><a href="{{ route('oferta') }}">Договор оферты</a></li>
+                            <li><a href="{{ route('dogovor') }}">Условия использования сервиса</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
                     <div class="footer-item">
                         <h4>Контакты</h4>
                         <ul>
@@ -131,11 +152,6 @@
                             <li><a href="{{ $contacts->telegram }}" target="_blank"><img src="{{ url('/')
                             }}/img/telegram.svg" alt=""></a>
                             </li>
-                        </ul>
-                        <ul>
-                            <li><a href="{{ route('policy') }}">Политика конфиденциальности</a></li>
-                            <li><a href="{{ route('oferta') }}">Договор оферты</a></li>
-                            <li><a href="{{ route('dogovor') }}">Условия использования сервиса</a></li>
                         </ul>
                     </div>
                 </div>

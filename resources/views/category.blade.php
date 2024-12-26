@@ -25,9 +25,6 @@
 
     <div class="page cars category">
         <div class="container">
-            {{ now( \Illuminate\Support\Facades\Auth::user()->timezone ) }}
-
-
             <div class="row">
                 @if($category->products->isNotEmpty())
                     @foreach($category->products->sortByDesc('created_at') as $product)
@@ -36,15 +33,8 @@
                         </div>
                     @endforeach
                 @else
-                    <h2>Не найдeно!</h2>
+                    <div class="alert alert-danger">Автомобили не найдены</div>
                 @endif
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="pagination">
-
-                    </div>
-                </div>
             </div>
         </div>
     </div>

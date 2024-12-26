@@ -23,14 +23,14 @@
     <div class="page cars search">
         <div class="container">
             <div class="row">
-                @if($search)
+                @if($search->isNotEmpty())
                     @foreach($search as $product)
                         <div class="col-lg-3 col-md-6">
                             @include('layouts.card')
                         </div>
                     @endforeach
                 @else
-                    <h2>Продукции не найдены</h2>
+                    <div class="alert alert-danger">Автомобили не найдены</div>
                 @endif
             </div>
         </div>

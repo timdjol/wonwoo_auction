@@ -18,64 +18,76 @@
                         <p class="alert alert-warning">{{ session()->get('warning') }}</p>
                     @endif
                     <h1>Заявки на покупку</h1>
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>Авто</th>
-                            <th>Имя</th>
-                            <th>Телефон</th>
-                            <th>Дата</th>
-                            <th>Сумма</th>
-                            <th>Действия</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($orders as $order)
-                            <tr>
-                                <td>{{ $order->product_title }}</td>
-                                <td>{{ $order->name }}</td>
-                                <td><a href="tel:{{ $order->phone }}">{{ $order->phone }}</a></td>
-                                <td>{{ $order->showDate() }}</td>
-                                <td>{{ number_format($order->product_price) }} сом</td>
-                                <td>
-                                    <ul>
-                                        <form action="{{ route('forms.destroy', $order) }}" method="post">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="btn delete" onclick="return confirm('Вы уверены, что хотите удалить?')">Удалить</button>
-                                        </form>
-                                    </ul>
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                    {{ $orders->links('pagination::bootstrap-4') }}
+                    @if($orders->isNotEmpty())
+                        <div class="table-wrap">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Авто</th>
+                                    <th>Имя</th>
+                                    <th>Телефон</th>
+                                    <th>Дата</th>
+                                    <th>Сумма</th>
+                                    <th>Действия</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($orders as $order)
+                                    <tr>
+                                        <td>{{ $order->product_title }}</td>
+                                        <td>{{ $order->name }}</td>
+                                        <td><a href="tel:{{ $order->phone }}">{{ $order->phone }}</a></td>
+                                        <td>{{ $order->showDate() }}</td>
+                                        <td>{{ number_format($order->product_price) }} сом</td>
+                                        <td>
+                                            <ul>
+                                                <form action="{{ route('forms.destroy', $order) }}" method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn delete"
+                                                            onclick="return confirm('Вы уверены, что хотите удалить?')">
+                                                        Удалить
+                                                    </button>
+                                                </form>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        {{ $orders->links('pagination::bootstrap-4') }}
+                    @else
+                        <div class="alert alert-danger">Заявки не найдены</div>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
 
     <style>
-        .process{
+        .process {
             color: orange;
             background-color: rgb(255 232 191);
             padding: 5px 15px;
             font-size: 12px;
             border-radius: 2px;
         }
-        .ready{
+
+        .ready {
             color: green;
             background-color: rgb(202 255 202);
             padding: 5px 15px;
             font-size: 12px;
             border-radius: 2px;
         }
-        table td, table th{
+
+        table td, table th {
             font-size: 14px;
             padding: 10px 5px;
         }
-        .admin form .delete, .admin table ul li a.btn{
+
+        .admin form .delete, .admin table ul li a.btn {
             font-size: 12px;
             border-radius: 5px;
         }

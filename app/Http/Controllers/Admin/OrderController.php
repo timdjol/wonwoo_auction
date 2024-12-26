@@ -32,8 +32,7 @@ class OrderController extends Controller
         $orders = Order::whereDate('created_at', today())->whereNot('product_id', null)->orderBy('created_at', 'desc')
             ->get()->unique('product_id');
         $last = Order::whereDate('created_at', '<', today())->whereNot('product_id', null)->orderBy('created_at', 'desc')
-            ->get()->unique
-        ('product_id');
+            ->get()->unique('product_id');
         return view('auth.orders.index', compact('orders', 'last', 'cars', 'contacts'));
     }
 
@@ -43,8 +42,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        $products = $order->products()->withTrashed()->get();
-        return view('auth.orders.show', compact('order', 'products'));
+        return view('auth.orders.show', compact('order'));
     }
 
 

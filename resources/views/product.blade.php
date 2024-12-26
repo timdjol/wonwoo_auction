@@ -33,7 +33,6 @@
                             <img loading="lazy" src="{{ Storage::url($image->image) }}" alt="">
                         @endforeach
                     </div>
-
                     @php
                         $user = \Illuminate\Support\Facades\Auth::user();
                         $services = explode(', ', $product->complex);
@@ -42,31 +41,34 @@
                         $now = Carbon\Carbon::parse(Carbon\Carbon::now());
                     @endphp
 
-                    @if($user == null || $user->is_admin != 1)
+                    @if($dateF == $product->dateLot)
                         @if($date_auc >= $now)
                             <div class="auction-info-item-value clearfix">
                                 <h4>Аукцион начнется через:</h4>
                                 <div class="timer" id="timer">
-                            <span id="timeDiff">
-                                <span class="timer-item timer-dd">
-                                    <span class="timer-value" id="days">00</span>
-                                    <span class="timer-word">Дн.</span>
-                                </span>
-                                <span class="timer-item timer-hh">
-                                    <span class="timer-value" id="hours">00</span>
-                                    <span class="timer-word">Час.</span>
-                                </span>
-                                <span class="timer-item timer-mm">
-                                    <span class="timer-value" id="minutes">00</span>
-                                    <span class="timer-word">Мин.</span>
-                                </span>
-                                <span class="timer-item timer-ss">
-                                    <span class="timer-value" id="seconds">00</span>
-                                    <span class="timer-word">Сек.</span>
-                                </span>
-                            </span>
+                                        <span id="timeDiff">
+                                            <span class="timer-item timer-dd">
+                                                <span class="timer-value" id="days">00</span>
+                                                <span class="timer-word">Дн.</span>
+                                            </span>
+                                            <span class="timer-item timer-hh">
+                                                <span class="timer-value" id="hours">00</span>
+                                                <span class="timer-word">Час.</span>
+                                            </span>
+                                            <span class="timer-item timer-mm">
+                                                <span class="timer-value" id="minutes">00</span>
+                                                <span class="timer-word">Мин.</span>
+                                            </span>
+                                            <span class="timer-item timer-ss">
+                                                <span class="timer-value" id="seconds">00</span>
+                                                <span class="timer-word">Сек.</span>
+                                            </span>
+                                        </span>
                                 </div>
                             </div>
+                            @php
+                                $timezone = \Illuminate\Support\Facades\Auth::user()->timezone;
+                            @endphp
                             <script type="text/javascript">
                                 const timer = document.querySelector("#timer");
                                 const days = document.querySelector("#days");
@@ -75,7 +77,7 @@
                                 const seconds = document.querySelector("#seconds");
 
                                 // Устанавливаем дату и время, до которого хотим посчитать разницу
-                                let countDownDate = new Date("{{ $contacts->date_auc }}").getTime();
+                                let countDownDate = new Date("{{ $date->setTimezone($timezone) }}").getTime();
 
                                 let updateTimer = setInterval(function () {
                                     // Получаем текущее дату и время
@@ -150,20 +152,23 @@
                         </ul>
                         <div class="price"><b>Стартовая цена:</b> {{ number_format($product->price) }} сом</div>
                         <div class="btn-wrap">
-                            @if(\Illuminate\Support\Facades\Auth::check())
-                                @if($date_auc <= $now)
-                                    @if($user->status === 1 )
-                                        <a href="{{ route('sales') }}"
-                                           class="more">Участвовать</a>
-                                    @else
-                                        <div class="alert alert-danger tt" style="margin-bottom: 20px">Для участия
-                                            необходимо <a href="{{ route('deposit') }}">внести депозит</a>
-                                        </div>
+                            @if($dateF == $product->dateLot)
+                                @auth
+                                    @if($date_auc <= $now)
+                                        @if($user->status === 1 )
+                                            <a href="{{ route('sales') }}"
+                                               class="more">Участвовать</a>
+                                        @else
+                                            <div class="alert alert-danger tt" style="margin-bottom: 20px">Для участия
+                                                необходимо <a href="{{ route('deposit') }}">внести депозит</a>
+                                            </div>
+                                        @endif
                                     @endif
-                                @endif
-                            @else
-                                <div class="tt" style="margin-bottom: 20px">Для участия в аукционе необходимо <a href="{{
+                                @else
+                                    <div class="tt" style="margin-bottom: 20px">Для участия в аукционе необходимо <a
+                                                href="{{
                             route('login') }}">войти в систему</a></div>
+                                @endauth
                             @endif
                             <a href="#protocol" class="more history">История авто</a>
                         </div>
