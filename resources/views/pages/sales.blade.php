@@ -53,21 +53,21 @@
                                             <table>
                                                 <tr>
                                                     <th>#</th>
-                                                    <th>ID</th>
                                                     <th>Название</th>
                                                     <th>Двигатель</th>
                                                     <th>Коробка</th>
                                                     <th>Год выпуска</th>
+                                                    <th># лота</th>
                                                     <th></th>
                                                 </tr>
                                                 @foreach($cars as $car)
                                                     <tr>
                                                         <td>{{ $loop->iteration }}</td>
-                                                        <td>{{ $car->id }}</td>
                                                         <td>{{ $car->title }}</td>
                                                         <td>{{ $car->engine }}</td>
                                                         <td>{{ $car->transmission }}</td>
                                                         <td>{{ $car->year }}</td>
+                                                        <td>{{ $car->lot }}</td>
                                                         <td><a class="more" href="{{ route('product', [isset($category) ? $category->code :
                                     $car->category->code, $car->code])
          }}">Подробнее</a></td>
@@ -158,7 +158,7 @@
                                         .'?product_id='.$car->id)
                                             @livewire('count-down{{ $loop->iteration }}')
                                             <style>
-                                                #tab-{{ $loop->iteration }} {
+                                                #tab-{{ $loop->iteration }}  {
                                                     display: block !important;
                                                     position: relative !important;
                                                     top: auto !important;
@@ -202,61 +202,61 @@
                                             }
                                         </style>
                                     @endif
-                                        @if (Request::fullUrl() == route('sales') . '?tab=tab-5')
-                                            @livewire('count-down5')
-                                            <style>
-                                                #tab-5 {
-                                                    display: block !important;
-                                                    position: relative !important;
-                                                    top: auto !important;
-                                                    left: auto !important;
-                                                }
-                                            </style>
-                                        @endif
-                                        @if (Request::fullUrl() == route('sales') . '?tab=tab-6')
-                                            @livewire('count-down6')
-                                            <style>
-                                                #tab-6 {
-                                                    display: block !important;
-                                                    position: relative !important;
-                                                    top: auto !important;
-                                                    left: auto !important;
-                                                }
-                                            </style>
-                                        @endif
-                                        @if (Request::fullUrl() == route('sales') . '?tab=tab-7')
-                                            @livewire('count-down7')
-                                            <style>
-                                                #tab-7 {
-                                                    display: block !important;
-                                                    position: relative !important;
-                                                    top: auto !important;
-                                                    left: auto !important;
-                                                }
-                                            </style>
-                                        @endif
-                                        @if (Request::fullUrl() == route('sales') . '?tab=tab-8')
-                                            @livewire('count-down8')
-                                            <style>
-                                                #tab-8 {
-                                                    display: block !important;
-                                                    position: relative !important;
-                                                    top: auto !important;
-                                                    left: auto !important;
-                                                }
-                                            </style>
-                                        @endif
-                                        @if (Request::fullUrl() == route('sales') . '?tab=tab-9')
-                                            @livewire('count-down9')
-                                            <style>
-                                                #tab-9 {
-                                                    display: block !important;
-                                                    position: relative !important;
-                                                    top: auto !important;
-                                                    left: auto !important;
-                                                }
-                                            </style>
-                                        @endif
+                                    @if (Request::fullUrl() == route('sales') . '?tab=tab-5')
+                                        @livewire('count-down5')
+                                        <style>
+                                            #tab-5 {
+                                                display: block !important;
+                                                position: relative !important;
+                                                top: auto !important;
+                                                left: auto !important;
+                                            }
+                                        </style>
+                                    @endif
+                                    @if (Request::fullUrl() == route('sales') . '?tab=tab-6')
+                                        @livewire('count-down6')
+                                        <style>
+                                            #tab-6 {
+                                                display: block !important;
+                                                position: relative !important;
+                                                top: auto !important;
+                                                left: auto !important;
+                                            }
+                                        </style>
+                                    @endif
+                                    @if (Request::fullUrl() == route('sales') . '?tab=tab-7')
+                                        @livewire('count-down7')
+                                        <style>
+                                            #tab-7 {
+                                                display: block !important;
+                                                position: relative !important;
+                                                top: auto !important;
+                                                left: auto !important;
+                                            }
+                                        </style>
+                                    @endif
+                                    @if (Request::fullUrl() == route('sales') . '?tab=tab-8')
+                                        @livewire('count-down8')
+                                        <style>
+                                            #tab-8 {
+                                                display: block !important;
+                                                position: relative !important;
+                                                top: auto !important;
+                                                left: auto !important;
+                                            }
+                                        </style>
+                                    @endif
+                                    @if (Request::fullUrl() == route('sales') . '?tab=tab-9')
+                                        @livewire('count-down9')
+                                        <style>
+                                            #tab-9 {
+                                                display: block !important;
+                                                position: relative !important;
+                                                top: auto !important;
+                                                left: auto !important;
+                                            }
+                                        </style>
+                                    @endif
                                 </div>
                                 <div class="col-md-4">
                                     <div class="alert alert-info">Количество участвующих

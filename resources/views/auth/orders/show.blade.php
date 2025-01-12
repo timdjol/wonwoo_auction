@@ -1,22 +1,40 @@
 @extends('auth/layouts.master')
 
-@section('title', 'Заказ # ' . $order->id)
+@section('title', 'Заказ # ' . $auction->id)
 
 @section('content')
 
-    <div class="page admin order">
+    <div class="page admin">
         <div class="container">
             <div class="row">
                 <div class="col-md-3">
                     @include('auth/layouts.sidebar')
                 </div>
                 <div class="col-md-9">
-                    <h1>Заказ #{{ $order->id }}</h1>
-                    <p><b>Покупатель:</b> {{$order->name}}</p>
-                    <p><b>Телефон:</b> <a href="tel:{{$order->phone}}">{{$order->phone}}</a></p>
-                    <p><b>Email:</b> <a href="mailto:{{$order->email}}">{{$order->email}}</a></p>
-                    <p><b>Авто:</b> {{ $order->product_title }}</p>
-                    <p><b>Стоимость:</b> {{ number_format($order->sum) }} сом</p>
+                    <h1>Заказ #{{ $auction->id }}</h1>
+                    <p></p>
+                    <table>
+                        <tr>
+                            <td><b>Покупатель:</b> </td>
+                            <td>{{$auction->name}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Телефон:</b></td>
+                            <td><a href="tel:{{$auction->phone}}">{{$auction->phone}}</a></td>
+                        </tr>
+                        <tr>
+                            <td><b>Email:</b></td>
+                            <td><a href="mailto:{{$auction->email}}">{{$auction->email}}</a></td>
+                        </tr>
+                        <tr>
+                            <td><b>Авто:</b></td>
+                            <td>{{ $auction->product_title }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Стоимость:</b></td>
+                            <td>{{ number_format($auction->sum) }} сом</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>

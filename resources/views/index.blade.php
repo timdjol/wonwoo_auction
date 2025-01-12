@@ -10,14 +10,6 @@
         $now = Carbon\Carbon::parse(Carbon\Carbon::now());
     @endphp
 
-{{--    @if($date_auc < $now->addMinute(2))--}}
-{{--        @php--}}
-{{--            $contacts->update([--}}
-{{--                'date_auc' => $date_auc->addDays(7)->format('Y-m-d H:i')--}}
-{{--            ]);--}}
-{{--        @endphp--}}
-{{--    @endif--}}
-
     <div class="slider">
         <div class="owl-carousel owl-slider">
             @foreach($sliders as $slider)
@@ -77,22 +69,21 @@
         </div>
     </div>
 
-    <div class="auct">
-        <div class="overlay"></div>
+    <div class="enter">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="text-wrap">
-                        <h1 style="margin-bottom: 30px">Аукцион cкоро начнется</h1>
-                        <div class="btn-wrap">
-                            <a href="{{ route('sales') }}" class="more">Войти в аукцион</a>
-                        </div>
+                    <video width="100%" height="500" loop autoplay muted playsinline style="user-select: none;"
+                           src="{{ route('index') }}/img/video.mp4" type='video/mp4'>
+                    </video>
+{{--                    <img src="{{ route('index') }}/img/auction.jpeg" alt="">--}}
+                    <div class="btn-wrap">
+                        <a href="{{ route('sales') }}" class="more">Войти в аукцион</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 
     <div class="cars">
         <div class="container">
@@ -126,8 +117,9 @@
                         <li class="tab-link current" data-tab="tab-1">Марки</li>
                         <li class="tab-link" data-tab="tab-2">Модели</li>
                         <li class="tab-link" data-tab="tab-3">Категории</li>
-                        <li class="tab-link" data-tab="tab-4">Избранное</li>
-
+                        @auth
+                            <li class="tab-link" data-tab="tab-4">Избранное</li>
+                        @endauth
                     </ul>
                     <div class="tab-content current" id="tab-1">
                         <ul>
@@ -174,6 +166,7 @@
                     <p>Аукцион WonWoo — мировой лидер онлайн-аукционов по продаже б/у, поврежденных, списанных авто, а также транспортных средств с чистыми сертификатами. Мы упрощаем поиск, участие в торгах и выигрыш классических авто, лодок, авто, изъятых за неуплату, квадроциклов, экзотических авто, мотоциклов и многих других категорий транспортных средств.</p>
                     <!-- <p>Покупатели подержанных или битых авто, авторазборщики, дилеры, авторемонтные мастерские и частные лица — все могут найти что-то для себя на аукционе WonWoo. У нас даже есть авто, не требующие лицензию на ведение коммерческой деятельности, доступные в разделе No License Required (не требуют лицензии). Каждый будний день мы предлагаем авто с чистыми сертификатами, битые авто, грузовики, внедорожники, мотоциклы, тяжелое оборудование и многое другое.</p> -->
                     <p>Будучи глобальным лидером по продаже подержанных авто через онлайн-аукцион, WonWoo предлагает всем желающим делать ставки и выигрывать. Станьте участником плана «Базовый» или «Премьер» и начинайте размещать ставки и выигрывать на аукционе подержанных авто.</p>
+                    <img src="{{ route('index') }}/img/instruc.jpeg" alt="">
                     <div class="btn-wrap">
                         <a href="{{ route('register') }}" class="more">Станьте участником</a>
                     </div>
@@ -182,27 +175,27 @@
         </div>
     </div>
 
-    <div class="about community">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h2>Сообщество</h2>
-                    <p>Это площадка для набора минимального количества участников на экскурсию или поиска попутчиков
-                        для путешествия.
-                        WonWoo лишь предоставляет путешественникам удобное онлайн-пространство для обмена информацией,
-                        но не гарантирует брокерские услуги или бронирование.
-                        В целях обеспечения безопасного и приятного общения на доске объявлений запрещается незаконная предпринимательская деятельность, реклама и невежливое поведение, а такие сообщения могут удаляться без предупреждения.</p>
-                    <div class="btn-wrap">
-                        <a href="{{ route('register') }}" class="more">Станьте участником</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+{{--    <div class="about community">--}}
+{{--        <div class="container">--}}
+{{--            <div class="row">--}}
+{{--                <div class="col-md-12">--}}
+{{--                    <h2>Сообщество</h2>--}}
+{{--                    <p>Это площадка для набора минимального количества участников на экскурсию или поиска попутчиков--}}
+{{--                        для путешествия.--}}
+{{--                        WonWoo лишь предоставляет путешественникам удобное онлайн-пространство для обмена информацией,--}}
+{{--                        но не гарантирует брокерские услуги или бронирование.--}}
+{{--                        В целях обеспечения безопасного и приятного общения на доске объявлений запрещается незаконная предпринимательская деятельность, реклама и невежливое поведение, а такие сообщения могут удаляться без предупреждения.</p>--}}
+{{--                    <div class="btn-wrap">--}}
+{{--                        <a href="{{ route('register') }}" class="more">Станьте участником</a>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
 
     <div id="popup-wrapper" onclick="closeFunction()">
         <div id="popup" class="popup">
-            <div class="close">
+            <div class="closeb">
                 <img src="{{ url('/') }}/img/close.svg" alt="">
             </div>
             <div class="text-wrap">

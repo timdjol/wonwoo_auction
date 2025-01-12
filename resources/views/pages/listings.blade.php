@@ -26,30 +26,34 @@
                 <div class="col-md-12">
                     <div class="table-wrap">
                         <h3>Список участвующих автомобилей</h3>
-                        <table>
-                            <tr>
-                                <th>#</th>
-                                <th>ID</th>
-                                <th>Название</th>
-                                <th>Двигатель</th>
-                                <th>Коробка</th>
-                                <th>Год выпуска</th>
-                                <th></th>
-                            </tr>
-                            @foreach($cars as $car)
+                        @if($cars->isEmpty())
+                            <div class="alert alert-danger">Автомобили на аукцион пока не выставлены</div>
+                        @else
+                            <table>
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $car->id }}</td>
-                                    <td>{{ $car->title }}</td>
-                                    <td>{{ $car->engine }}</td>
-                                    <td>{{ $car->transmission }}</td>
-                                    <td>{{ $car->year }}</td>
-                                    <td><a class="more" href="{{ route('product', [isset($category) ? $category->code :
+                                    <th>#</th>
+                                    <th>Название</th>
+                                    <th>Двигатель</th>
+                                    <th>Коробка</th>
+                                    <th>Год выпуска</th>
+                                    <th># лота</th>
+                                    <th></th>
+                                </tr>
+                                @foreach($cars as $car)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $car->title }}</td>
+                                        <td>{{ $car->engine }}</td>
+                                        <td>{{ $car->transmission }}</td>
+                                        <td>{{ $car->year }}</td>
+                                        <td>{{ $car->lot }}</td>
+                                        <td><a class="more" href="{{ route('product', [isset($category) ? $category->code :
                                     $car->category->code, $car->code])
          }}">Подробнее</a></td>
-                                </tr>
-                            @endforeach
-                        </table>
+                                    </tr>
+                                @endforeach
+                            </table>
+                        @endif
                     </div>
                 </div>
             </div>

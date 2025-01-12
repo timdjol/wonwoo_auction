@@ -1,8 +1,13 @@
 <div class="cars-item">
-    <a href="{{ route('product', [isset($category) ? $category->code : $product->category->code, $product->code])
+    <div class="img-wrap">
+        <a href="{{ route('product', [isset($category) ? $category->code : $product->category->code, $product->code])
          }}">
-        <div class="img" style="background-image: url({{ Storage::url($product->image) }})"></div>
-    </a>
+            <div class="img" style="background-image: url({{ Storage::url($product->image) }})"></div>
+        </a>
+        @isset($product->stock)
+            <div class="label">{{ $product->stock }}</div>
+        @endisset
+    </div>
     <div class="text-wrap">
         <h4>{{ $product->title }}</h4>
         <div class="charac">
@@ -12,7 +17,7 @@
                 <li>Расположение руля: {{ $product->steer }}</li>
                 <li>Объем: {{ $product->volume }}</li>
                 <li>Номер паркинга: {{ $product->parking }}</li>
-                <li>Стартовая цена: {{ number_format($product->price) }} сом</li>
+                <li>Стартовая цена: {{ number_format($product->price) }} {{ $currencySymbol }}</li>
             </ul>
         </div>
         <div class="btn-wrap">

@@ -12,12 +12,12 @@ use App\Models\Engine;
 use App\Models\Image;
 use App\Models\Models;
 use App\Models\Product;
-use App\Models\Property;
 use App\Models\Salon;
-use App\Models\Sku;
 use App\Models\Suspension;
 use App\Models\Transmission;
+
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -75,7 +75,7 @@ class ProductController extends Controller
                 DB::table('images')->insert(
                     array(
                         'image'=>  $image,
-                        'product_id' => $prod->id,
+                        'product_id' => $product->id,
                     )
                 );
             endforeach;
@@ -195,7 +195,8 @@ class ProductController extends Controller
         $salons = Salon::where('product_id', $product->id)->get();
         $bodies = Body::where('product_id', $product->id)->get();
         session()->flash('success', 'Продукция ' . $product->title . ' добавлена');
-        return view('auth.products.form', compact('product', 'categories', 'images', 'brands', 'models', 'complex', 'engines', 'transmissions', 'suspensions', 'brakes','salons', 'bodies'));
+        return view('auth.products.editform', compact('product', 'categories', 'images', 'brands', 'models', 'complex',
+            'engines', 'transmissions', 'suspensions', 'brakes','salons', 'bodies'));
     }
 
     /**
@@ -204,7 +205,7 @@ class ProductController extends Controller
      * @param Product $product
      * @return RedirectResponse
      */
-    public function update(ProductRequest $request, Product $product)
+    public function update(Request $request, Product $product)
     {
         $request['code'] = Str::slug($request->title);
         $params = $request->all();
@@ -225,18 +226,16 @@ class ProductController extends Controller
         }
 
         //images
-        unset($params['images']);
         $images = $request->file('images');
         if ($request->hasFile('images')) :
-            if($images != null) {
-                Storage::delete($images);
-                DB::table('images')->where('product_id', $product->id)->delete();
-            }
             foreach ($images as $image):
                 $image = $image->store('products');
-                DB::table('images')
-                    ->where('product_id', $product->id)
-                    ->updateOrInsert(['product_id' => $product->id, 'image' => $image]);
+                DB::table('images')->insert(
+                    array(
+                        'image'=>  $image,
+                        'product_id' => $product->id,
+                    )
+                );
             endforeach;
         endif;
 
@@ -350,6 +349,12 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
+        $images = Image::where('product_id', $product->id)->get();
+        foreach ($images as $file) {
+            Storage::delete($file->image);
+        }
+        DB::table('images')->where('hotel_id', $product->id)->delete();
+
         session()->flash('success', 'Продукция ' . $product->title . ' удалена');
         return redirect()->route('products.index');
     }

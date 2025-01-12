@@ -29,23 +29,24 @@
                     <div class="fotorama" data-allowfullscreen="true" data-nav="thumbs" data-loop="true"
                          data-autoplay="3000">
                         <img loading="lazy" src="{{ Storage::url($product->image) }}" alt="">
-                        @foreach($images as $image)
-                            <img loading="lazy" src="{{ Storage::url($image->image) }}" alt="">
+                        @foreach($images as $file)
+                            <img loading="lazy" src="{{ Storage::url($file->image) }}" alt="">
                         @endforeach
                     </div>
-                    @php
-                        $user = \Illuminate\Support\Facades\Auth::user();
-                        $services = explode(', ', $product->complex);
-                        $contacts = \App\Models\Contact::first();
-                        $date_auc = Carbon\Carbon::parse($contacts->date_auc);
-                        $now = Carbon\Carbon::parse(Carbon\Carbon::now());
-                    @endphp
+                    @auth
+                        @php
+                            $user = \Illuminate\Support\Facades\Auth::user();
+                            $services = explode(', ', $product->complex);
+                            $contacts = \App\Models\Contact::first();
+                            $date_auc = Carbon\Carbon::parse($contacts->date_auc);
+                            $now = Carbon\Carbon::parse(Carbon\Carbon::now());
+                        @endphp
 
-                    @if($dateF == $product->dateLot)
-                        @if($date_auc >= $now)
-                            <div class="auction-info-item-value clearfix">
-                                <h4>Аукцион начнется через:</h4>
-                                <div class="timer" id="timer">
+                        @if($dateF == $product->dateLot)
+                            @if($date_auc >= $now)
+                                <div class="auction-info-item-value clearfix">
+                                    <h4>Аукцион начнется через:</h4>
+                                    <div class="timer" id="timer">
                                         <span id="timeDiff">
                                             <span class="timer-item timer-dd">
                                                 <span class="timer-value" id="days">00</span>
@@ -64,59 +65,62 @@
                                                 <span class="timer-word">Сек.</span>
                                             </span>
                                         </span>
+                                    </div>
                                 </div>
-                            </div>
-                            @php
-                                $timezone = \Illuminate\Support\Facades\Auth::user()->timezone;
-                            @endphp
-                            <script type="text/javascript">
-                                const timer = document.querySelector("#timer");
-                                const days = document.querySelector("#days");
-                                const hours = document.querySelector("#hours");
-                                const minutes = document.querySelector("#minutes");
-                                const seconds = document.querySelector("#seconds");
+                                @php
+                                    $timezone = \Illuminate\Support\Facades\Auth::user()->timezone;
+                                @endphp
+                                <script type="text/javascript">
+                                    const timer = document.querySelector("#timer");
+                                    const days = document.querySelector("#days");
+                                    const hours = document.querySelector("#hours");
+                                    const minutes = document.querySelector("#minutes");
+                                    const seconds = document.querySelector("#seconds");
 
-                                // Устанавливаем дату и время, до которого хотим посчитать разницу
-                                let countDownDate = new Date("{{ $date->setTimezone($timezone) }}").getTime();
+                                    // Устанавливаем дату и время, до которого хотим посчитать разницу
+                                    let countDownDate = new Date("{{ $date->setTimezone($timezone) }}").getTime();
 
-                                let updateTimer = setInterval(function () {
-                                    // Получаем текущее дату и время
-                                    let now = new Date().getTime();
-                                    // Находим разницу между текущим временем и заданным
-                                    let difference = countDownDate - now;
+                                    let updateTimer = setInterval(function () {
+                                        // Получаем текущее дату и время
+                                        let now = new Date().getTime();
+                                        // Находим разницу между текущим временем и заданным
+                                        let difference = countDownDate - now;
 
-                                    // Рассчитываем дни, часы, минуты и секунды
-                                    let daysDif = Math.floor(difference / (1000 * 60 * 60 * 24));
-                                    let hoursDif = Math.floor(
-                                        (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-                                    );
-                                    let minutesDif = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-                                    let secondsDif = Math.floor((difference % (1000 * 60)) / 1000);
+                                        // Рассчитываем дни, часы, минуты и секунды
+                                        let daysDif = Math.floor(difference / (1000 * 60 * 60 * 24));
+                                        let hoursDif = Math.floor(
+                                            (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+                                        );
+                                        let minutesDif = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                                        let secondsDif = Math.floor((difference % (1000 * 60)) / 1000);
 
-                                    // Вставляем значения в таймер
-                                    days.innerHTML = daysDif;
-                                    hours.innerHTML = hoursDif;
-                                    minutes.innerHTML = minutesDif;
-                                    seconds.innerHTML = secondsDif;
+                                        // Вставляем значения в таймер
+                                        days.innerHTML = daysDif;
+                                        hours.innerHTML = hoursDif;
+                                        minutes.innerHTML = minutesDif;
+                                        seconds.innerHTML = secondsDif;
 
-                                    // Когда таймер дойдет до заданной даты и времени
-                                    if (difference < 0) {
-                                        clearInterval(updateTimer);
-                                        if (window.location.href.substr(-2) !== '?r') {
-                                            window.location = window.location.href + '?r';
+                                        // Когда таймер дойдет до заданной даты и времени
+                                        if (difference < 0) {
+                                            clearInterval(updateTimer);
+                                            if (window.location.href.substr(-2) !== '?r') {
+                                                window.location = window.location.href + '?r';
+                                            }
+                                            timer.innerHTML = "<h2 class='alert alert-success'>Аукцион начался</h2>";
                                         }
-                                        timer.innerHTML = "<h2 class='alert alert-success'>Аукцион начался</h2>";
-                                    }
-                                    // Обновляем функцию с интервалом 1 секунда
-                                }, 1000);
-                            </script>
+                                        // Обновляем функцию с интервалом 1 секунда
+                                    }, 1000);
+                                </script>
+                            @endif
                         @endif
-                    @endif
-
+                    @endauth
                 </div>
                 <div class="col-lg-5 col-md-12">
                     <h3>Технические характеристики</h3>
                     <ul>
+                        @isset($product->stock)
+                            <li><b>Наличие:</b> {{ $product->stock }}</li>
+                        @endisset
                         <li>Год выпуска: {{ $product->year }}</li>
                         <li>Двигатель: {{ $product->engine }}</li>
                         <li>Мощность: {{ $product->power }} л.с.</li>
@@ -150,7 +154,7 @@
                             <li>Дата аукциона: {{ $product->dateLot }}</li>
                             <li>Статус торгов: {{ $product->stick }}</li>
                         </ul>
-                        <div class="price"><b>Стартовая цена:</b> {{ number_format($product->price) }} сом</div>
+                        <div class="price"><b>Стартовая цена:</b> {{ number_format($product->price) }} {{ $currencySymbol }}</div>
                         <div class="btn-wrap">
                             @if($dateF == $product->dateLot)
                                 @auth
@@ -174,7 +178,7 @@
                         </div>
                     </div>
                     <div class="tab-content" id="tab-2">
-                        <div class="price"><b>Цена продажи:</b> {{ number_format($product->price_sale) }} сом</div>
+                        <div class="price"><b>Цена продажи:</b> {{ number_format($product->price_sale) }} {{ $currencySymbol }}</div>
                         <div class="btn-wrap">
                             <a href="#callback" class="more">Купить</a>
                         </div>
@@ -219,6 +223,9 @@
                             <td>
                                 <div class="row">
                                     <div class="row">
+                                        @php
+                                            $services = explode(', ', $product->complex);
+                                        @endphp
                                         @foreach($services as $service)
                                             <div class="col-md-4">
                                                 <div class="item">
@@ -493,6 +500,10 @@
                         <tr>
                             <td><b>X</b></td>
                             <td>Замененая деталь</td>
+                        </tr>
+                        <tr>
+                            <td><b>О</b></td>
+                            <td>Состояние хорошее</td>
                         </tr>
                     </table>
 

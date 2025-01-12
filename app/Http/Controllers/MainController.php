@@ -7,6 +7,7 @@ use App\Models\Brake;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Contact;
+use App\Models\Currency;
 use App\Models\Engine;
 use App\Models\Form;
 use App\Models\Image;
@@ -26,7 +27,7 @@ class MainController extends Controller
     public function index()
     {
         $sliders = Slider::get();
-        $products = Product::query()->inRandomOrder()->limit(8)->get();
+        $products = Product::query()->where('status', 1)->inRandomOrder()->limit(8)->get();
         $brands = Brand::orderBy('title', 'ASC')->get();
         $models = Models::orderBy('title', 'ASC')->get();
         $categories = Category::orderBy('sort', 'ASC')->get();
@@ -113,9 +114,9 @@ class MainController extends Controller
         $contacts = Contact::first();
         $date = Carbon::parse($contacts->date_auc);
         $dateF = $date->format('Y-m-d');
-        $product = Product::withTrashed()->byCode($productCode)->firstOrFail();
+        $product = Product::byCode($productCode)->firstOrFail();
         $images = Image::where('product_id', $product->id)->get();
-        $related = Product::where('id', '!=', $product->id)->get();
+        $related = Product::where('id', '!=', $product->id)->where('status', 1)->get();
         $engines = Engine::where('product_id', $product->id)->get();
         $transmissions = Transmission::where('product_id', $product->id)->get();
         $suspensions = Suspension::where('product_id', $product->id)->get();
@@ -123,6 +124,13 @@ class MainController extends Controller
         $salons = Salon::where('product_id', $product->id)->get();
         $bodies = Body::where('product_id', $product->id)->get();
         return view('product', compact('product', 'images', 'related', 'engines', 'transmissions', 'suspensions', 'brakes', 'salons', 'bodies', 'date', 'dateF'));
+    }
+
+    public function changeCurrency($currencyCode)
+    {
+        $currency = Currency::byCode($currencyCode)->firstOrFail();
+        session(['currency' => $currency->code]);
+        return redirect()->back();
     }
 
 }

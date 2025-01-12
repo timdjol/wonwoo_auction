@@ -25,9 +25,8 @@
             <div class="row">
                 <div class="col-lg-8 offset-lg-2 col-md-12">
                     {!! $page->description !!}
-                    <div class="btn-wrap">
-                        <a href="#callback" class="more">Стать участником</a>
-                    </div>
+                    <img src="{{ route('index') }}/img/instruc.jpeg" alt="">
+
                 </div>
             </div>
         </div>

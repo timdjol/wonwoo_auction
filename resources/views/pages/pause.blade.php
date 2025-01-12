@@ -60,6 +60,11 @@
                                     }, 15000);
                                 </script>
                             @endif
+                            @if($cars->count() < 2)
+                                <script>
+                                    window.location.replace("{{ route('end') }}");
+                                </script>
+                            @endif
                         @endif
                     </div>
                 </div>

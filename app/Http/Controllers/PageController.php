@@ -19,7 +19,7 @@ class PageController extends Controller
 {
     public function stock()
     {
-        $products = Product::orderBy('created_at', 'DESC')->where('status', 1)->get();
+        $products = Product::orderBy('created_at', 'DESC')->where('status', 1)->where('stock', 'В наличии')->get();
         $categories = Category::orderBy('sort', 'ASC')->get();
         return view('pages.stock', compact('products', 'categories'));
     }

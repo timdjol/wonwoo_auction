@@ -12,7 +12,7 @@
         <li @routeactive(
         'prod*')><a href="{{ route('products.index')}}">Автомобили</a></li>
         <li @routeactive(
-        'order*')><a href="{{ route('orders.index')}}">Аукционы</a></li>
+        'order*')><a href="{{ route('auctions.index')}}">Аукционы</a></li>
         <li @routeactive(
         'form*')><a href="{{ route('forms.index')}}">Заявки на покупку</a></li>
         <li @routeactive(

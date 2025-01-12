@@ -175,9 +175,21 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="checkbox">
                             <input type="checkbox" id="checkbox"><label for="checkbox">Показать пароль</label>
+                        </div>
+
+                        <div class="form-group checkbox">
+                            @error ('agreement')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                            <input type="checkbox" id="agree" name="agreement" @if(old('agreement')=='on')) checked @endif
+                            ><label
+                                    for="agree">Согласен с <a
+                                        href="{{ route('policy') }}" target="_blank">политикой конфиденциальности</a> и <a
+                                        href="{{ route('dogovor') }}" target="_blank">условиями
+                                    использования сервиса</a></label>
+                            <label for=""></label>
                         </div>
                         <script src="https://code.jquery.com/jquery-3.7.1.min.js"
                                 integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
@@ -195,7 +207,7 @@
                             </a>
                         </div>
                         @csrf
-                        <button class="more">Войти</button>
+                        <button class="more">Зарегистрироваться</button>
                     </form>
                 </div>
             </div>

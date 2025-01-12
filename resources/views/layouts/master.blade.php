@@ -15,7 +15,7 @@
     <meta name="theme-color" content="#000">
     <!-- Custom Browsers Color End -->
     <link rel="stylesheet" href="{{route('index')}}/css/main.min.css">
-    <link rel="stylesheet" href="{{route('index')}}/css/style.css?ver=1.8">
+    <link rel="stylesheet" href="{{route('index')}}/css/style.css?ver=2.0">
 
     @livewireStyles
 
@@ -57,6 +57,13 @@
                         @auth
                             <li class="d-xl-none d-lg-none d-block"><a class="more" href="{{ route('get-logout') }}">Выйти</a></li>
                         @endauth
+                        @foreach($currencies as $currency)
+                            <li class="d-xl-none d-lg-none d-block"
+                                    @if($currencySymbol == $currency->symbol) class="current"
+                                    @endif
+                            ><a href="{{ route('currency', $currency->code) }}">{{ $currency->symbol
+                                }}</a></li>
+                        @endforeach
                     </ul>
                     <ul class="icons">
                         <li><a href="#search"><img class="search" src="{{ url('/') }}/img/search.svg" alt=""></a></li>
@@ -79,6 +86,17 @@
                             </a>
                         </li>
                     </ul>
+                    <div class="currency d-xl-inline-block d-lg-inline-block d-none">
+                        <ul>
+                            @foreach($currencies as $currency)
+                                <li
+                                        @if($currencySymbol == $currency->symbol) class="current"
+                                        @endif
+                                ><a href="{{ route('currency', $currency->code) }}">{{ $currency->symbol
+                                }}</a></li>
+                            @endforeach
+                        </ul>
+                    </div>
                 </nav>
             </div>
         </div>

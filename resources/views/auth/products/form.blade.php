@@ -16,7 +16,7 @@
                 </div>
                 <div class="col-md-9">
                     @isset($product)
-                        <h1>Редактировать продукцию {{ $product->title }}</h1>
+                        <h1>Редактировать {{ $product->title }}</h1>
                     @else
                         <h1>Добавить авто</h1>
                     @endisset
@@ -100,6 +100,28 @@
                                                     @endisset
                                             >{{ $model->title }}</option>
                                         @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                @include('auth.layouts.error', ['fieldname' => 'stock'])
+                                <div class="form-group">
+                                    <label for="stock">Наличие</label>
+                                    <select name="stock" id="stock">
+                                        @isset($product)
+                                            <option value="{{ $product->stock }}" selected>{{ $product->stock
+                                            }}</option>
+                                        @else
+                                            <option value="">Выбрать</option>
+                                        @endisset
+                                        <option value="В наличии" @if(old('stock') == 'В наличии')
+                                            selected
+                                                @endif>В наличии
+                                        </option>
+                                        <option value="Аукцион из Кореи" @if(old('stock') == 'Аукцион из Кореи')
+                                            selected
+                                                @endif>Аукцион из Кореи
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -190,6 +212,10 @@
                                             selected
                                                 @endif>Робот
                                         </option>
+                                        <option value="Вариатор" @if(old('transmission') == 'Вариатор')
+                                            selected
+                                                @endif>Вариатор
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -215,7 +241,7 @@
                                             selected
                                                 @endif>Гибрид
                                         </option>
-                                        <option value="Электро" @if(old('oil') == 'Газ')
+                                        <option value="Газ" @if(old('oil') == 'Газ')
                                             selected
                                                 @endif>Газ
                                         </option>
@@ -735,6 +761,34 @@
                                             selected
                                                 @endif>8
                                         </option>
+                                            <option value="9" @if(old('count_place') == 9)
+                                                selected
+                                                    @endif>9
+                                            </option>
+                                            <option value="10" @if(old('count_place') == 10)
+                                                selected
+                                                    @endif>10
+                                            </option>
+                                            <option value="11" @if(old('count_place') == 11)
+                                                selected
+                                                    @endif>11
+                                            </option>
+                                            <option value="12" @if(old('count_place') == 12)
+                                                selected
+                                                    @endif>12
+                                            </option>
+                                            <option value="13" @if(old('count_place') == 13)
+                                                selected
+                                                    @endif>13
+                                            </option>
+                                            <option value="14" @if(old('count_place') == 14)
+                                                selected
+                                                    @endif>14
+                                            </option>
+                                            <option value="15" @if(old('count_place') == 15)
+                                                selected
+                                                    @endif>15
+                                            </option>
                                     </select>
                                 </div>
                             </div>
@@ -894,7 +948,7 @@
                                 @include('auth.layouts.error', ['fieldname' => 'lot'])
                                 <div class="form-group">
                                     <label for="">Номер лота</label>
-                                    <input type="text" name="lot" value="{{ old('lot', isset($product) ?
+                                    <input type="number" name="lot" value="{{ old('lot', isset($product) ?
                                 $product->lot :
                              null) }}">
                                 </div>
@@ -1009,6 +1063,10 @@
                                             selected
                                                 @endif>X
                                         </option>
+                                        <option value="O" @if(old('plk') == 'O')
+                                            selected
+                                                @endif>O
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -1045,6 +1103,10 @@
                                         <option value="X" @if(old('pld') == 'X')
                                             selected
                                                 @endif>X
+                                        </option>
+                                        <option value="O" @if(old('pld') == 'O')
+                                            selected
+                                                @endif>O
                                         </option>
                                     </select>
                                 </div>
@@ -1083,6 +1145,10 @@
                                             selected
                                                 @endif>X
                                         </option>
+                                        <option value="O" @if(old('zld') == 'O')
+                                            selected
+                                                @endif>O
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -1119,6 +1185,10 @@
                                         <option value="X" @if(old('zlk') == 'X')
                                             selected
                                                 @endif>X
+                                        </option>
+                                        <option value="O" @if(old('zlk') == 'O')
+                                            selected
+                                                @endif>O
                                         </option>
                                     </select>
                                 </div>
@@ -1158,6 +1228,10 @@
                                             selected
                                                 @endif>X
                                         </option>
+                                        <option value="O" @if(old('pt') == 'O')
+                                            selected
+                                                @endif>O
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -1194,6 +1268,10 @@
                                         <option value="X" @if(old('pll') == 'X')
                                             selected
                                                 @endif>X
+                                        </option>
+                                        <option value="O" @if(old('pll') == 'O')
+                                            selected
+                                                @endif>O
                                         </option>
                                     </select>
                                 </div>
@@ -1232,6 +1310,10 @@
                                             selected
                                                 @endif>X
                                         </option>
+                                        <option value="O" @if(old('ppl') == 'O')
+                                            selected
+                                                @endif>O
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -1268,6 +1350,10 @@
                                         <option value="X" @if(old('pk') == 'X')
                                             selected
                                                 @endif>X
+                                        </option>
+                                        <option value="O" @if(old('pk') == 'O')
+                                            selected
+                                                @endif>O
                                         </option>
                                     </select>
                                 </div>
@@ -1306,6 +1392,10 @@
                                             selected
                                                 @endif>X
                                         </option>
+                                        <option value="O" @if(old('k') == 'O')
+                                            selected
+                                                @endif>O
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -1342,6 +1432,10 @@
                                         <option value="X" @if(old('zk') == 'X')
                                             selected
                                                 @endif>X
+                                        </option>
+                                        <option value="O" @if(old('zk') == 'O')
+                                            selected
+                                                @endif>O
                                         </option>
                                     </select>
                                 </div>
@@ -1380,6 +1474,10 @@
                                             selected
                                                 @endif>X
                                         </option>
+                                        <option value="O" @if(old('zll') == 'O')
+                                            selected
+                                                @endif>O
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -1416,6 +1514,10 @@
                                         <option value="X" @if(old('zpl') == 'X')
                                             selected
                                                 @endif>X
+                                        </option>
+                                        <option value="O" @if(old('zpl') == 'O')
+                                            selected
+                                                @endif>O
                                         </option>
                                     </select>
                                 </div>
@@ -1454,6 +1556,10 @@
                                             selected
                                                 @endif>X
                                         </option>
+                                        <option value="O" @if(old('zt') == 'O')
+                                            selected
+                                                @endif>O
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -1490,6 +1596,10 @@
                                         <option value="X" @if(old('ppk') == 'X')
                                             selected
                                                 @endif>X
+                                        </option>
+                                        <option value="O" @if(old('ppk') == 'O')
+                                            selected
+                                                @endif>O
                                         </option>
                                     </select>
                                 </div>
@@ -1528,6 +1638,10 @@
                                             selected
                                                 @endif>X
                                         </option>
+                                        <option value="O" @if(old('ppd') == 'O')
+                                            selected
+                                                @endif>O
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -1565,6 +1679,10 @@
                                             selected
                                                 @endif>X
                                         </option>
+                                        <option value="O" @if(old('zpd') == 'O')
+                                            selected
+                                                @endif>O
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -1601,6 +1719,10 @@
                                         <option value="X" @if(old('zpk') == 'X')
                                             selected
                                                 @endif>X
+                                        </option>
+                                        <option value="O" @if(old('zpk') == 'O')
+                                            selected
+                                                @endif>O
                                         </option>
                                     </select>
                                 </div>
@@ -1895,32 +2017,71 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="">Доп изображения</label>
-                            @isset($images)
-                                @foreach($images as $image)
-                                    <img src="{{ Storage::url($image->image) }}" alt="">
-                                @endforeach
-                            @endisset
+                            <div class="img-wrap">
+                                <div class="row">
+                                    @isset($images)
+                                        <label for="">Доп изображения</label>
+                                        @foreach($images as $image)
+                                            <div class="col-md-2">
+                                                <div class="img-item">
+                                                    <img src="{{ Storage::url($image->image) }}" alt="">
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    @endisset
+                                </div>
+                            </div>
                             <input type="file" name="images[]" multiple="true">
                         </div>
 
                         <div class="form-group">
                             <label for="">Статус</label>
                             <select name="status">
-                                <option value="1">Включено</option>
-                                <option value="0">Отключено</option>
+                                @isset($product)
+                                    @if($product->status == 1)
+                                        <option value="1">Включено</option>
+                                        <option value="0">Отключено</option>
+                                    @else
+                                        <option value="0">Отключено</option>
+                                        <option value="1">Включено</option>
+                                    @endif
+                                        <option value="1">Включено</option>
+                                        <option value="0">Отключено</option>
+                                    @else
+                                @endisset
                             </select>
                         </div>
                         @csrf
                         <button class="more">Отправить</button>
                         <a href="{{ url()->previous() }}" class="btn delete cancel">Отмена</a>
                     </form>
+
+
                 </div>
             </div>
         </div>
     </div>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+          integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
     <style>
+        .img-wrap {
+            margin-top: 20px;
+        }
+
+        .img-item {
+            position: relative;
+        }
+
+        .img-item button {
+            position: absolute;
+            right: 0;
+            top: 0;
+            font-size: 12px;
+        }
+
         h5 {
             margin-top: 30px;
             display: block;

@@ -56,16 +56,13 @@
         </div>
     </div>
 
-    <div class="auct">
-        <div class="overlay"></div>
+    <div class="enter">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="text-wrap">
-                        <h1 style="margin-bottom: 30px">Аукцион cкоро начнется</h1>
-                        <div class="btn-wrap">
-                            <a href="{{ route('sales') }}" class="more">Войти в аукцион</a>
-                        </div>
+                    <img src="{{ route('index') }}/img/auction.jpeg" alt="">
+                    <div class="btn-wrap">
+                        <a href="{{ route('sales') }}" class="more">Войти в аукцион</a>
                     </div>
                 </div>
             </div>

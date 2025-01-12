@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\SkuRequest;
 use App\Models\Image;
 use App\Models\Product;
-use App\Models\Sku;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
 {
@@ -21,11 +20,19 @@ class ImageController extends Controller
      * @param Request $request
      * @param Product $product
      */
-    public function store(SkuRequest $request, Image $image, Product $product){
+    public function store(Request $request, Image $image, Product $product){
         $params = $request->all();
         $params['product_id'] = $request->product->id;
-        $image = Image::create($params);
-        session()->flash('success', 'Sku ' . $request->product->title . ' добавлен' );
-        return redirect()->route('skus.index', $product);
+        Image::create($params);
+        session()->flash('success', $request->product->title . ' добавлен' );
+        return redirect()->route('rooms.index', $product);
+    }
+
+    public function destroy(Image $image)
+    {
+        $image->delete();
+        Storage::delete($image);
+        session()->flash('success', 'Image deleted');
+        return redirect()->back();
     }
 }

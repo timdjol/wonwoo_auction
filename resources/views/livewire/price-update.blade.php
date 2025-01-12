@@ -1,27 +1,4 @@
 <div wire:poll.1s>
-    @php
-        $or = \App\Models\Order::where('user_id', 9991)->exists();
-        if($or != true){
-            \App\Models\Order::create([
-                'user_id' => 9991,
-                'date' => now()->format('Y-m-d H:i')
-            ]);
-            $last = \App\Models\Order::where('user_id', 9991)->orderBy('created_at', 'DESC')->first();
-            $ord = now()->subSecond(20)->diffInSeconds($last->created_at);
-        } else {
-         $ord = now()->subSecond(20)->diffInSeconds($order->created_at ?? now());
-        }
-//            if($ord == 0){
-//                redirect()->route('pause');
-//            }
-//            if($ord > 20){
-//                $ord = 20;
-//                redirect()->route('pause');
-//            }
-    @endphp
-    <div id="clock" class="alert alert-danger">
-        <span id="seconds">{{ $ord }}</span>
-    </div>
     <ul class="nav whiskey-tabs">
         @foreach ($cars as $car)
             @if($loop->iteration==1)
@@ -43,7 +20,7 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="parking">
-                                        № паркинга: {{ $car->parking }}
+                                        № лота: {{ $car->lot }}
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -301,6 +278,7 @@
                                            value="{{ $car->id }}">
                                     <input type="hidden" name="product_title"
                                            value="{{ $car->title }}">
+                                    <input type="hidden" name="lot" value="{{ $car->lot }}">
                                     @if($csum != null)
                                         <input type="hidden" name="sum" id="sum" value="{{ $csum->sum +
                                                   $contacts->sum_auc ?? $car->price + $contacts->sum_auc }}">
@@ -588,6 +566,8 @@
                                            value="{{ $car->id }}">
                                     <input type="hidden" name="product_title"
                                            value="{{ $car->title }}">
+                                    <input type="hidden" name="lot"
+                                           value="{{ $car->lot }}">
                                     @if($csum != null)
                                         <input type="hidden" name="sum" id="sum" value="{{ $csum->sum +
                                                   $contacts->sum_auc ?? $car->price + $contacts->sum_auc }}">

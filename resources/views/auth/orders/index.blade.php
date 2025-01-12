@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <div class="page admin order">
+    <div class="page admin">
         <div class="container">
             <div class="row">
                 <div class="col-md-2">
@@ -35,7 +35,7 @@
                             @endadmin
                         </div>
                     </div>
-                    @if($orders->isNotEmpty())
+                    @if($auctions->isNotEmpty())
                         @php
                             $pay = \App\Models\Payment::where('user_id', \Illuminate\Support\Facades\Auth::id())
                             ->first();
@@ -58,21 +58,21 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($orders as $order)
+                                @foreach($auctions as $auction)
                                     <tr>
                                         <td>
                                             @php
-                                                $product = \App\Models\Product::where('id', $order->product_id)->firstOrFail();
+                                                $product = \App\Models\Product::where('id', $auction->product_id)->firstOrFail();
                                             @endphp
                                             {{ $product->title }}
                                         </td>
-                                        <td>{{ $order->name }}</td>
-                                        <td><a href="tel:{{ $order->phone }}">{{ $order->phone }}</a></td>
-                                        <td><a href="mailto:{{ $order->email }}">{{ $order->email }}</a></td>
-                                        <td>{{ $order->showDate() }}</td>
-                                        <td>{{ number_format($order->sum) }} сом</td>
+                                        <td>{{ $auction->name }}</td>
+                                        <td><a href="tel:{{ $auction->phone }}">{{ $auction->phone }}</a></td>
+                                        <td><a href="mailto:{{ $auction->email }}">{{ $auction->email }}</a></td>
+                                        <td>{{ $auction->showDate() }}</td>
+                                        <td>{{ number_format($auction->sum) }} сом</td>
                                         <td>
-                                            @if($order->status == 0)
+                                            @if($auction->status == 0)
                                                 <span class="process">В процессе</span>
                                             @else
                                                 <span class="ready">Продан</span>
@@ -81,11 +81,11 @@
                                         @admin
                                         <td>
                                             <ul>
-                                                <li><a class="btn view" href="{{ route('orders.show', $order)
+                                                <li><a class="btn view" href="{{ route('auctions.show', $auction)
                                                 }}">Открыть</a></li>
-                                                <li><a class="btn edit" href="{{ route('orders.edit', $order)
+                                                <li><a class="btn edit" href="{{ route('auctions.edit', $auction)
                                                 }}">Редактировать</a></li>
-                                                <form action="{{ route('orders.destroy', $order) }}" method="post">
+                                                <form action="{{ route('auctions.destroy', $auction) }}" method="post">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn delete"
@@ -110,20 +110,20 @@
                         <div class="table-wrap">
                             <table class="table">
                                 <tbody>
-                                @foreach($last as $order)
+                                @foreach($last as $auction)
                                     <tr>
                                         <td>
                                             @php
-                                                $product = \App\Models\Product::where('id', $order->product_id)->firstOrFail();
+                                                $product = \App\Models\Product::where('id', $auction->product_id)->firstOrFail();
                                             @endphp
                                             {{ $product->title }}
                                         </td>
-                                        <td>{{ $order->name }}</td>
-                                        <td><a href="tel:{{ $order->phone }}">{{ $order->phone }}</a></td>
-                                        <td>{{ $order->showDate() }}</td>
-                                        <td>{{ number_format($order->sum) }} сом</td>
+                                        <td>{{ $auction->name }}</td>
+                                        <td><a href="tel:{{ $auction->phone }}">{{ $auction->phone }}</a></td>
+                                        <td>{{ $auction->showDate() }}</td>
+                                        <td>{{ number_format($auction->sum) }} сом</td>
                                         <td>
-                                            @if($order->status == 0)
+                                            @if($auction->status == 0)
                                                 <span class="process">В процессе</span>
                                             @else
                                                 <span class="ready">Продан</span>
@@ -131,9 +131,9 @@
                                         </td>
                                         <td>
                                             <ul>
-                                                <li><a class="btn edit" href="{{ route('orders.edit', $order)
+                                                <li><a class="btn edit" href="{{ route('auctions.edit', $auction)
                                                 }}">Редактировать</a></li>
-                                                <form action="{{ route('orders.destroy', $order) }}" method="post">
+                                                <form action="{{ route('auctions.destroy', $auction) }}" method="post">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn delete"
@@ -163,7 +163,7 @@
             background-color: rgb(255 232 191);
             padding: 5px 15px;
             font-size: 12px;
-            border-radius: 2px;
+            bauction-radius: 2px;
         }
 
         .ready {
@@ -171,7 +171,7 @@
             background-color: rgb(202 255 202);
             padding: 5px 15px;
             font-size: 12px;
-            border-radius: 2px;
+            bauction-radius: 2px;
         }
 
         table td, table th {
@@ -181,7 +181,7 @@
 
         .admin form .delete, .admin table ul li a.btn {
             font-size: 12px;
-            border-radius: 5px;
+            bauction-radius: 5px;
         }
     </style>
 

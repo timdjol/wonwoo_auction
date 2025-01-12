@@ -33,6 +33,7 @@ class RegisterRequest extends FormRequest
             //'account' => ['integer'],
             'password' => ['required', 'string'],
             'password_confirmation' => ['required', 'string'],
+            'agreement' => ['required'],
         ];
     }
 

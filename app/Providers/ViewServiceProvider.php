@@ -25,7 +25,11 @@ class ViewServiceProvider extends ServiceProvider
         View::composer(['layouts.master', 'categories'], 'App\ViewComposers\CategoriesComposer');
         View::composer(['layouts.head_sock', 'categories'], 'App\ViewComposers\CategoriesComposer');
         View::composer(['layouts.master', 'order'], 'App\ViewComposers\ContactsComposer');
+        View::composer(['layouts.master', 'currencies'], 'App\ViewComposers\CurrenciesComposer');
 
-
+        View::composer('*', function($view){
+            $currencySymbol = CurrencyConversion::getCurrencySymbol();
+            $view->with('currencySymbol', $currencySymbol);
+        });
     }
 }

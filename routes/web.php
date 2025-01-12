@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\AuctionController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\PageController;
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/logout', 'App\Http\Controllers\ProfileController@logout')->name('get-logout');
+Route::get('currency/{currencyCode}', 'App\Http\Controllers\MainController@changeCurrency')->name('currency');
 
 Route::middleware('set_locale')->group(function(){
     Route::middleware('auth', 'auth.session')->group(function()
@@ -45,6 +47,7 @@ Route::middleware('set_locale')->group(function(){
                 Route::get('/sendemail',
                     [App\Http\Controllers\Admin\OrderController::class, 'sendEmail'])->name('sendemail');
                 Route::resource("orders", "App\Http\Controllers\Admin\OrderController");
+                Route::resource("auctions", "App\Http\Controllers\Admin\AuctionController");
                 Route::resource("forms", "App\Http\Controllers\Admin\FormController");
                 Route::resource('categories', 'App\Http\Controllers\Admin\CategoryController');
                 Route::resource('brands', 'App\Http\Controllers\Admin\BrandController');
@@ -57,6 +60,13 @@ Route::middleware('set_locale')->group(function(){
                 Route::resource("countries", "App\Http\Controllers\Admin\CountryController");
                 Route::resource("regions", "App\Http\Controllers\Admin\RegionController");
                 Route::resource("payments", "App\Http\Controllers\Admin\PaymentController");
+                Route::resource("images", "App\Http\Controllers\Admin\ImageController");
+                Route::resource("engines", "App\Http\Controllers\Admin\EngineController");
+                Route::resource("transmissions", "App\Http\Controllers\Admin\TransmissionController");
+                Route::resource("suspensions", "App\Http\Controllers\Admin\SuspensionController");
+                Route::resource("brakes", "App\Http\Controllers\Admin\BrakeController");
+                Route::resource("salons", "App\Http\Controllers\Admin\SalonController");
+                Route::resource("bodies", "App\Http\Controllers\Admin\BodyController");
             });
         });
 
@@ -100,7 +110,7 @@ Route::middleware('set_locale')->group(function(){
     Route::get('/pause8', [AuctionController::class, 'pause8'])->name('pause8');
     Route::get('/pause9', [AuctionController::class, 'pause9'])->name('pause9');
     //Route::get('/sale_frame', [AuctionController::class, 'sale_frame'])->name('sale_frame');
-    Route::get('/send', 'App\Http\Controllers\AuctionController@sendMessage')->name('sendMessage');
+    //Route::get('/send', 'App\Http\Controllers\AuctionController@sendMessage')->name('sendMessage');
 
     Route::get('/failure', [PageController::class, 'failure_page'])->name('failure_page');
     Route::get('/check', [PageController::class, 'check_page'])->name('check_page');

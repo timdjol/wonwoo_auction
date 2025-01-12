@@ -17,7 +17,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-2 col-8">
-                    <img src="{{ url('/') }}/img/logo.svg">
+                    <a href="{{ route('index') }}"><img src="{{ url('/') }}/img/logo.svg"></a>
                 </div>
                 <div class="col-md-10 col-4">
                     <nav>

@@ -20,6 +20,7 @@
                     <div class="row aic">
                         <div class="col-md-7">
                             <h1>Автомобили</h1>
+                            <small>Кол-во авто: {{ $products->count() }}</small>
                         </div>
                         <div class="col-md-5">
                             <div class="btn-wrap">
@@ -31,6 +32,7 @@
                         <table class="table">
                             <thead>
                             <tr>
+                                <th># лота</th>
                                 <th>Изображение</th>
                                 <th>Название</th>
                                 <th>Категория</th>
@@ -42,6 +44,7 @@
                             <tbody>
                             @foreach($products as $product)
                                 <tr>
+                                    <td>{{ $product->lot }}</td>
                                     <td><img src="{{ Storage::url($product->image) }}" alt=""></td>
                                     <td>{{ $product->title }}</td>
                                     <td>{{ $product->category->title }}</td>

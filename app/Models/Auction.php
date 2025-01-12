@@ -1,0 +1,22 @@
+<?php
+
+namespace App\Models;
+
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class Auction extends Model
+{
+    use HasFactory;
+    use SoftDeletes;
+
+    protected $fillable = ['user_id', 'sum', 'name', 'phone', 'email', 'product_id', 'product_title', 'status', 'date', 'lot'];
+
+    public function showDate()
+    {
+        return Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at)->format('d/m/Y H:i');
+    }
+
+}

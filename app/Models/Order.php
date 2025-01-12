@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-//use App\Services\CurrencyConversion;
+//use App\Services\CurrencyConversion.php;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -11,10 +11,9 @@ class Order extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['user_id', 'sum', 'name', 'phone', 'email', 'product_id', 'product_title', 'status', 'date'];
+    protected $fillable = ['user_id', 'sum', 'name', 'phone', 'email', 'product_id', 'product_title', 'status', 'date', 'lot'];
 
     public function scopeActive($query)
-
     {
         return $query->where('status', 1);
     }

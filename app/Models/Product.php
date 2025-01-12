@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\CurrencyConversion;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -71,7 +72,7 @@ class Product extends Model
         'ppd',
         'zpd',
         'zpk',
-        'sale'
+        'stock'
     ];
 
     public function category()
@@ -132,6 +133,25 @@ class Product extends Model
     public function scopeByCode($query, $code)
     {
         return $query->where('code', $code);
+    }
+
+    public function getPriceAttribute($value) {
+        return round(CurrencyConversion::convert($value), 0);
+    }
+
+    public function getPriceSaleAttribute($value) {
+        return round(CurrencyConversion::convert($value), 0);
+    }
+
+    /* получить цену в данной валюте */
+    public function getPriceInCurrency(Currency $currency) {
+        return round(CurrencyConversion::convert($this->price,  CurrencyConversion::getCurrentCurrencyFromSession()
+            ->code, $currency->code), 0);
+    }
+
+    public function getPriceSaleInCurrency(Currency $currency) {
+        return round(CurrencyConversion::convert($this->price_sale,  CurrencyConversion::getCurrentCurrencyFromSession()
+            ->code, $currency->code), 0);
     }
 
 

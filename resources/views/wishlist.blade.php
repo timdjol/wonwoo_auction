@@ -36,7 +36,7 @@
                                         {{ $name->title }}
                                         </a>
                                     </td>
-                                    <td>{{ number_format($name->price) }} сом</td>
+                                    <td>{{ number_format($name->price) }} {{ $currencySymbol }}</td>
                                     <td>
                                         <form action="{{ route('wishlist-remove', $name->id) }}" method="post">
                                             <button type="submit" class="btn btn-danger">Удалить</button>

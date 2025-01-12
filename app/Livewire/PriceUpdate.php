@@ -19,7 +19,7 @@ class PriceUpdate extends Component
         $user_orders = Order::where('user_id', Auth::id())->orderBy('updated_at', 'desc')
             ->first();
         $orders = Order::orderBy('updated_at', 'desc')->first();
-        $cars = Product::where('dateLot', $date->format('Y-m-d'))->where('status', 1)->orderBy('updated_at', 'DESC')
+        $cars = Product::where('dateLot', $date->format('Y-m-d'))->where('status', 1)->orderBy('lot', 'ASC')
             ->get();
 
         return view('livewire.price-update', [

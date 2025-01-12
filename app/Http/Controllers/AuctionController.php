@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\AuctionMail;
 use App\Mail\ShopMail;
+use App\Models\Auction;
 use App\Models\Contact;
 use App\Models\Form;
 use App\Models\Order;
@@ -26,12 +27,10 @@ class AuctionController extends Controller
     }
 
     public function store(Request $request, Order $order)
-    {;
+    {
         $params = $request->all();
         Order::create($params);
-
-        //Mail::to('info@wonwookorea.com')->send(new AuctionMail($request));
-        //Mail::to('info@wonwookorea.com')->cc($request->email)->send(new AuctionMail($request));
+        Auction::create($params);
         //session()->flash('success', 'Ваша ставка выставлена на сумму ' . $request->sum . 'сом');
         return back();
     }
@@ -40,7 +39,7 @@ class AuctionController extends Controller
     {
         $contacts = Contact::first();
         $date = Carbon::parse($contacts->date_auc);
-        $cars = Product::where('dateLot', $date->format('Y-m-d'))->where('status', 1)->get();
+        $cars = Product::where('dateLot', $date->format('Y-m-d'))->where('status', 1)->orderBy('lot', 'asc')->get();
         $users = User::whereBetween('last_seen', [now()->subMinute(5), now()])->where('status', 1)->get();
 
         return view('pages.sales', compact('cars', 'users', 'contacts'));
@@ -50,7 +49,7 @@ class AuctionController extends Controller
     {
         $contacts = Contact::first();
         $date = Carbon::parse($contacts->date_auc);
-        $cars = Product::where('dateLot', $date->format('Y-m-d'))->where('status', 1)->get();
+        $cars = Product::where('dateLot', $date->format('Y-m-d'))->where('status', 1)->orderBy('lot', 'asc')->get();
         $users = User::whereTime('last_seen', '<=', Config::get('session.lifetime'))->where('status', 1)->get();
         return view('pages.listings', compact('cars', 'users'));
     }
@@ -61,52 +60,91 @@ class AuctionController extends Controller
             'date_auc' => now()->addDay(7)
         ]);
 
-        return view('pages.end');
+        $orders = Auction::whereDate('created_at', today())->whereNot('product_id', null)->orderBy('sum', 'desc')->get()
+            ->unique('product_id');
+        foreach ($orders as $user){
+            Mail::to($user->email)->send(new AuctionMail($user));
+            //$user::latest()->skip(1)->delete();
+            $user->update([
+                'status' => 1,
+            ]);
+        }
+
+        DB::table('orders')->truncate();
+
+        return view('pages.end', compact('orders'));
     }
 
     public function pause()
     {
-        return view('pages.pause');
+        $contacts = Contact::first();
+        $date = Carbon::parse($contacts->date_auc);
+        $cars = Product::where('dateLot', $date->format('Y-m-d'))->where('status', 1)->orderBy('lot', 'asc')->get();
+        return view('pages.pause', compact('cars'));
     }
 
     public function pause2()
     {
-        return view('pages.pause2');
+        $contacts = Contact::first();
+        $date = Carbon::parse($contacts->date_auc);
+        $cars = Product::where('dateLot', $date->format('Y-m-d'))->where('status', 1)->orderBy('lot', 'asc')->get();
+        return view('pages.pause2', compact('cars'));
     }
 
     public function pause3()
     {
-        return view('pages.pause3');
+        $contacts = Contact::first();
+        $date = Carbon::parse($contacts->date_auc);
+        $cars = Product::where('dateLot', $date->format('Y-m-d'))->where('status', 1)->orderBy('lot', 'asc')->get();
+        return view('pages.pause3', compact('cars'));
     }
 
     public function pause4()
     {
-        return view('pages.pause4');
+        $contacts = Contact::first();
+        $date = Carbon::parse($contacts->date_auc);
+        $cars = Product::where('dateLot', $date->format('Y-m-d'))->where('status', 1)->orderBy('lot', 'asc')->get();
+        return view('pages.pause4', compact('cars'));
     }
 
     public function pause5()
     {
-        return view('pages.pause5');
+        $contacts = Contact::first();
+        $date = Carbon::parse($contacts->date_auc);
+        $cars = Product::where('dateLot', $date->format('Y-m-d'))->where('status', 1)->orderBy('lot', 'asc')->get();
+        return view('pages.pause5', compact('cars'));
     }
 
     public function pause6()
     {
-        return view('pages.pause6');
+        $contacts = Contact::first();
+        $date = Carbon::parse($contacts->date_auc);
+        $cars = Product::where('dateLot', $date->format('Y-m-d'))->where('status', 1)->orderBy('lot', 'asc')->get();
+        return view('pages.pause6', compact('cars'));
     }
 
     public function pause7()
     {
-        return view('pages.pause7');
+        $contacts = Contact::first();
+        $date = Carbon::parse($contacts->date_auc);
+        $cars = Product::where('dateLot', $date->format('Y-m-d'))->where('status', 1)->orderBy('lot', 'asc')->get();
+        return view('pages.pause7', compact('cars'));
     }
 
     public function pause8()
     {
-        return view('pages.pause8');
+        $contacts = Contact::first();
+        $date = Carbon::parse($contacts->date_auc);
+        $cars = Product::where('dateLot', $date->format('Y-m-d'))->where('status', 1)->orderBy('lot', 'asc')->get();
+        return view('pages.pause8', compact('cars'));
     }
 
     public function pause9()
     {
-        return view('pages.pause9');
+        $contacts = Contact::first();
+        $date = Carbon::parse($contacts->date_auc);
+        $cars = Product::where('dateLot', $date->format('Y-m-d'))->where('status', 1)->orderBy('lot', 'asc')->get();
+        return view('pages.pause9', compact('cars'));
     }
 
     public function sale_frame()

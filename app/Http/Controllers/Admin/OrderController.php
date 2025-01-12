@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderRequest;
 use App\Mail\AuctionMail;
+use App\Models\Auction;
 use App\Models\Category;
 use App\Models\Contact;
 use App\Models\Form;
@@ -28,8 +29,8 @@ class OrderController extends Controller
         //$orders = Order::orderBy('sum', 'desc')->get()->unique('product_id');
         $contacts = Contact::first();
         $date = Carbon::parse($contacts->date_auc);
-        $cars = Product::where('dateLot', $date->format('Y-m-d'))->where('status', 1)->get();
-        $orders = Order::whereDate('created_at', today())->whereNot('product_id', null)->orderBy('created_at', 'desc')
+        $cars = Product::where('dateLot', $date->format('Y-m-d'))->where('status', 1)->pluck('id');
+        $orders = Auction::whereDate('created_at', today())->whereNot('product_id', null)->orderBy('created_at', 'desc')
             ->get()->unique('product_id');
         $last = Order::whereDate('created_at', '<', today())->whereNot('product_id', null)->orderBy('created_at', 'desc')
             ->get()->unique('product_id');
@@ -83,7 +84,7 @@ class OrderController extends Controller
         $user = Auth::user();
         $categories = Category::get();
         $product = Product::get();
-        $order = Order::get();
+        $order = Auction::get()->unique('product_id');
         $page = Page::get();
         $sliders = Slider::paginate(4);
         $form = Form::all();
